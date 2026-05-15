@@ -1,0 +1,17 @@
+sessions
+last_scenario_errors.log
+.venv
+__pycache__
+*.py[cod]
+capture.sublime-workspace
+audio_matb
+*.odt
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.idea/
+.vscode/

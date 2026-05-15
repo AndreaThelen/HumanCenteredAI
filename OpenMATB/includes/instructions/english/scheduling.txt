@@ -1,0 +1,7 @@
+<h1>Task overview</h1>
+
+<p>In the top right-hand corner of the screen, the participant has access to a planner, which indicates for each task (symbolized by a capital letter and a timeline) the phases during which it will be active.</p>
+
+<p>There's also an automation system, capable of sharing the workload with the participant. When automation is active for a given task, the planner symbolizes it.</p>
+
+<p>This helps participants manage their effort and resource allocation.</p>

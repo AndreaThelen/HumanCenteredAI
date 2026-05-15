@@ -1,0 +1,3 @@
+<p><strong>Cycle 09 (auto-aid)</strong></p>
+<p>Scale-4: was 47.3 > upper bound 45.0 for 1.0 s - reset to 32.0. Scale-1: 28.4, in range. Scale-2: 31.5, in range. Scale-3: 29.7, in range. Lights: OK.</p>
+

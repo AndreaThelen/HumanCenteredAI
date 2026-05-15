@@ -1,0 +1,3 @@
+<h1>Task overview</h1>
+
+<p>The challenge for the participant is to complete all these tasks simultaneously.</p>

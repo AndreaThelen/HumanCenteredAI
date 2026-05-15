@@ -1,0 +1,5 @@
+PREF_q1_most_informative;Which of the three forms of information panel felt most INFORMATIVE to you?;Form 1 (continuous status)/Form 3 (selective + cue);1/7/4
+PREF_q2_most_useful;Which form actually HELPED you most when deciding what to do?;Form 1 (continuous status)/Form 3 (selective + cue);1/7/4
+PREF_q3_most_trusted;Which form made you trust the automation most?;Form 1 (continuous status)/Form 3 (selective + cue);1/7/4
+PREF_q4_least_distracting;Which form was the LEAST distracting from the other tasks?;Form 1 (continuous status)/Form 3 (selective + cue);1/7/4
+PREF_q5_self_chosen;If you could choose for a future, similar task, which form would you pick?;Form 1 (continuous status)/Form 3 (selective + cue);1/7/4

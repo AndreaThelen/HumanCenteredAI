@@ -1,0 +1,3 @@
+Subjective_transparency;The system told me what it was doing.;Strongly disagree/Strongly agree;1/7/4
+Subjective_understanding;I understood why the system acted (or did not act) at each moment.;Strongly disagree/Strongly agree;1/7/4
+Subjective_information_volume;The amount of information the system gave me felt about right.;Far too little/Far too much;1/7/4

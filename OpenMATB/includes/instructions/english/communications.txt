@@ -1,0 +1,3 @@
+<h1>Task overview</h1>
+
+<p>In the communication task, the participant has to respond to sound instructions regarding the frequencies of his radios. Some messages are addressed to him (his callsign), but he must ignore other messages (other callsign).</p>

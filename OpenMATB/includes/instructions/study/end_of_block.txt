@@ -1,0 +1,7 @@
+<h1>End of block</h1>
+
+<p>This block is over. You will now answer a short series of questions about what you observed.</p>
+
+<p>Move each slider to the position that best matches your experience and press SPACE to confirm.</p>
+
+<p>Press SPACE to start the questionnaires.</p>

@@ -1,0 +1,5 @@
+MM_C_q1_what_acted;Out of the gauges below, which ones did the automation act on during this block? (Move the slider to indicate how many of scales 1, 2, 3, and 4 the automation actively reset.);0/4 scales;0/4/2
+MM_C_q2_skipped;On how many occasions did the automation FAIL to reset a scale that was out of bounds during this block?;0/12 misses;0/12/3
+MM_C_q3_which_scales;Which two scales were the automation's responsibility during this block? Move toward "scales 2+4" if those were the ones it monitored, or away if you believe it was a different pair.;A different pair/Scales 2 and 4;1/7/4
+MM_C_q4_reliability;What proportion of out-of-bounds events did the automation correctly handle? Estimate as a percentage.;0%/100%;0/100/75
+MM_C_q5_predictability;How confidently could you predict, before each event, whether the automation would act?;Not at all/With high confidence;1/7/4

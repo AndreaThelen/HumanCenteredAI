@@ -1,0 +1,11 @@
+<h1>This block: Form 3 - Selective + contrastive + actionable panel</h1>
+
+<p>For the next ~6 minutes, the system-monitoring task is supported by an <strong>automation aid</strong> that detects scale and light anomalies and resets them for you most of the time. The automation is reliable on roughly 75% of events. The remaining 25% it does not act on, and you must respond yourself by pressing the appropriate F-key.</p>
+
+<p><strong>Information panel.</strong> A panel will appear ONLY when something noteworthy has happened: a near-miss the automation just averted, or a failure the automation did NOT handle. Routine, uneventful auto-resets do NOT trigger a panel. When the panel does appear, it is contrastive ("would have failed in ~X s") AND, when the automation does not act, the panel ends with an explicit operator cue: <strong>"Check it yourself."</strong></p>
+
+<p>Press SPACE on each panel to dismiss it and return to the tasks.</p>
+
+<p>The other three MATB tasks (communications, resource management, scheduling) continue throughout. They are NOT supported by the automation - your manual responses to them are recorded.</p>
+
+<p>Press SPACE to begin.</p>

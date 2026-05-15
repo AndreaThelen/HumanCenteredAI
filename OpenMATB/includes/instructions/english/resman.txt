@@ -1,0 +1,7 @@
+<h1>Task overview</h1>
+
+<p>In the resource management task, participants have to limit the leakage of the two main tanks (A and B) using a set of back-up tanks and pumps, each with a specific power rating.</p>
+
+<p>The participant's task is to switch on/off the numbered pumps to bring tanks A and B as close as possible to their normal levels.</p>
+
+<p>Pumps can sometimes fail.</p>

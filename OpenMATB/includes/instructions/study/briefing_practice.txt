@@ -1,0 +1,15 @@
+<h1>Practice block</h1>
+
+<p>You will now practise the four MATB tasks for about five minutes WITHOUT any automation aid. Use this time to get used to the task layout, the keyboard mapping, and the pace.</p>
+
+<p><strong>System monitoring (top-left).</strong> Press F1-F4 if a scale arrow drifts to the end of its ladder. Press F5 if the green OK light goes off, F6 if the red WARNING light comes on.</p>
+
+<p><strong>Tracking (top-mid).</strong> Use the joystick / arrow keys to keep the cursor centred (only relevant if visible).</p>
+
+<p><strong>Communications (bottom-left).</strong> Listen for radio messages addressed to YOUR callsign and tune the requested radio to the requested frequency.</p>
+
+<p><strong>Resource management (bottom-mid).</strong> Keep tank A and tank B levels inside the green band by toggling pumps with the number keys.</p>
+
+<p><strong>Scheduling (top-right).</strong> Track the upcoming task timetable.</p>
+
+<p>The practice is untimed in the sense that no scoring data are kept. Press SPACE when you are ready to begin.</p>

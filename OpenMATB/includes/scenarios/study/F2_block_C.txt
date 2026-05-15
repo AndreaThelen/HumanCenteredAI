@@ -1,0 +1,97 @@
+# Study scenario - Form F2, Block C
+# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).
+# Block C uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.
+
+# 1. Briefing (form-specific)
+0:00:00;instructions;filename;study/briefing_F2.txt
+0:00:00;instructions;start
+
+# 2. Sysmon parameters (Frontiers 2024 moderate-load configuration)
+0:00:00;sysmon;automaticsolverdelay;1000
+0:00:00;sysmon;alerttimeout;10000
+0:00:00;sysmon;feedbackduration;1500
+0:00:00;sysmon;automaticsolver;True
+
+# 3. Start the four MATB tasks (sysmon supported by auto-aid; the others are NOT)
+0:00:00;sysmon;automaticsolver;True
+0:00:00;sysmon;start
+0:00:00;communications;start
+0:00:00;scheduling;start
+0:00:00;resman;start
+
+# 4. Communications schedule (9 calls)
+0:00:15;communications;radioprompt;own
+0:00:45;communications;radioprompt;other
+0:01:15;communications;radioprompt;own
+0:01:45;communications;radioprompt;own
+0:02:15;communications;radioprompt;other
+0:02:45;communications;radioprompt;own
+0:03:15;communications;radioprompt;own
+0:03:45;communications;radioprompt;other
+0:04:15;communications;radioprompt;own
+
+# 5. Resman background load (4 pump events)
+0:01:00;resman;pump-1-state;failure
+0:01:45;resman;pump-1-state;on
+0:03:30;resman;pump-3-state;failure
+0:04:15;resman;pump-3-state;on
+
+# 6. Sysmon experimental events (9 total, 7 auto-solved + 2 missed)
+# Event 01 at 0:00:30 : scales-2 (routine)
+0:00:29;sysmon;automaticsolver;True
+0:00:30;sysmon;scales-2-failure;True
+
+# Event 02 at 0:01:00 : scales-4 (routine)
+0:00:59;sysmon;automaticsolver;True
+0:01:00;sysmon;scales-4-failure;True
+
+# Event 03 at 0:01:30 : scales-2 (nearmiss)
+0:01:29;sysmon;automaticsolver;True
+0:01:30;sysmon;scales-2-failure;True
+0:01:32;instructions;filename;study/panels/F2/block_C_event_03.txt
+0:01:32;instructions;start
+
+# Event 04 at 0:02:00 : scales-4 (routine)
+0:01:59;sysmon;automaticsolver;True
+0:02:00;sysmon;scales-4-failure;True
+
+# Event 05 at 0:02:30 : scales-2 (miss)
+0:02:29;sysmon;automaticsolver;False
+0:02:30;sysmon;scales-2-failure;True
+0:02:32;instructions;filename;study/panels/F2/block_C_event_05.txt
+0:02:32;instructions;start
+
+# Event 06 at 0:03:00 : scales-4 (routine)
+0:02:59;sysmon;automaticsolver;True
+0:03:00;sysmon;scales-4-failure;True
+
+# Event 07 at 0:03:30 : scales-4 (nearmiss)
+0:03:29;sysmon;automaticsolver;True
+0:03:30;sysmon;scales-4-failure;True
+0:03:32;instructions;filename;study/panels/F2/block_C_event_07.txt
+0:03:32;instructions;start
+
+# Event 08 at 0:04:00 : scales-2 (miss)
+0:03:59;sysmon;automaticsolver;False
+0:04:00;sysmon;scales-2-failure;True
+0:04:02;instructions;filename;study/panels/F2/block_C_event_08.txt
+0:04:02;instructions;start
+
+# Event 09 at 0:04:30 : scales-4 (routine)
+0:04:29;sysmon;automaticsolver;True
+0:04:30;sysmon;scales-4-failure;True
+
+# 7. End of experimental block - stop tasks
+0:05:00;sysmon;stop
+0:05:00;communications;stop
+0:05:00;scheduling;stop
+0:05:00;resman;stop
+
+# 8. Post-block questionnaire battery
+0:05:01;instructions;filename;study/end_of_block.txt
+0:05:01;instructions;start
+0:05:02;genericscales;filename;study/mental_model_block_C.txt
+0:05:02;genericscales;start
+0:05:03;genericscales;filename;study/subjective_transparency.txt
+0:05:03;genericscales;start
+
