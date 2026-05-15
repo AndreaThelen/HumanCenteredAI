@@ -1,29 +1,33 @@
 #!/usr/bin/env python3
 # Regenerates the study scenario files.
-# Output: practice.txt, F{1,2,3}_block_{A,B,C}.txt, full_P01..P10.txt.
+# Output: practice.txt, F{1,2,3}_block_{A,B,C}.txt, full_P01..P10.txt,
+#         final_questionnaires.txt.
 # Tune the constants below and re-run; do not hand-edit the .txt files.
 #
 # Run:   python _regenerate.py     (from this folder)
 #
 # Target wall-clock per full_PXX ≈ 20 min once participant time on briefings /
 # questionnaires is added. Scenario MATB time is ~18:30.
+#
+# History: the original design used 5 min practice, 6:30 blocks, and 12
+# sysmon events per block. The current values (3, 5:00, 9) match
+# Documents/Study_proposal.md.
 
 from pathlib import Path
 
 OUT_DIR = Path(__file__).parent
 
 # --- Timing knobs ----------------------------------------------------------
-PRACTICE_DURATION_SEC  = 3 * 60   # was 5 * 60
-BLOCK_MATB_DURATION_SEC = 5 * 60  # was 6 * 60 + 30
-EVENTS_PER_BLOCK       = 9        # was 12
-EVENT_FIRST_OFFSET_SEC = 30       # first sysmon event after task start
-EVENT_GAP_SEC          = 30       # spacing between sysmon events
-PANEL_DELAY_SEC        = 2        # panel fires this many seconds after the failure
-QUESTIONNAIRE_GAP_SEC  = 1        # space each post-block questionnaire by 1 s
+PRACTICE_DURATION_SEC   = 3 * 60
+BLOCK_MATB_DURATION_SEC = 5 * 60
+EVENTS_PER_BLOCK        = 9
+EVENT_FIRST_OFFSET_SEC  = 30      # first sysmon event after task start
+EVENT_GAP_SEC           = 30      # spacing between sysmon events
+PANEL_DELAY_SEC         = 2       # panel fires this many seconds after the failure
+QUESTIONNAIRE_GAP_SEC   = 1       # space each post-block questionnaire by 1 s
 
 # --- Event pattern (length must equal EVENTS_PER_BLOCK) --------------------
 # R = routine auto-solved · NM = near-miss auto-solved · M = miss (no aid)
-# Original 12-event pattern was [R R NM R M R NM M R R NM M]; truncated to 9.
 EVENT_PATTERN = ["R", "R", "NM", "R", "M", "R", "NM", "M", "R"]
 assert len(EVENT_PATTERN) == EVENTS_PER_BLOCK
 
@@ -174,22 +178,23 @@ def render_task_stops(t0):
 
 
 def render_post_block_questionnaires(t0, block_letter):
+    """Returns (lines, end_time_sec) where end_time is when the last item fires."""
     g = QUESTIONNAIRE_GAP_SEC
     out = ["# 8. Post-block questionnaire battery"]
-    # Reduced to the two measures called for in Study_proposal.md:
-    # the mental-model probe and the subjective-transparency rating.
-    # NASA-TLX and the engagement-check items have been dropped.
+    # Per Documents/Study_proposal.md the battery is just the mental-model
+    # probe and the subjective-transparency rating.
     items = [
         ("instructions",  "study/end_of_block.txt"),
         ("genericscales", f"study/mental_model_block_{block_letter}.txt"),
         ("genericscales", "study/subjective_transparency.txt"),
     ]
+    last_t = t0
     for i, (plugin, fname) in enumerate(items):
-        t = t0 + i * g
-        out.append(f"{hms(t)};{plugin};filename;{fname}")
-        out.append(f"{hms(t)};{plugin};start")
+        last_t = t0 + i * g
+        out.append(f"{hms(last_t)};{plugin};filename;{fname}")
+        out.append(f"{hms(last_t)};{plugin};start")
     out.append("")
-    return out
+    return out, last_t
 
 
 def render_block(form, block_letter, t0, include_task_lifecycle):
@@ -212,8 +217,8 @@ def render_block(form, block_letter, t0, include_task_lifecycle):
     if include_task_lifecycle:
         lines += render_task_stops(matb_end)
     q_start = matb_end + 1
-    lines += render_post_block_questionnaires(q_start, block_letter)
-    end = q_start + (5 - 1) * QUESTIONNAIRE_GAP_SEC
+    q_lines, end = render_post_block_questionnaires(q_start, block_letter)
+    lines += q_lines
     return lines, end
 
 
@@ -299,9 +304,8 @@ def render_practice(t0, include_task_lifecycle):
 
 # --- Final questionnaires -------------------------------------------------
 def render_final(t0):
-    # Per Study_proposal.md, the only remaining end-of-session item is the
-    # preference debrief that compares the three forms. The Madsen & Gregor
-    # trust scale has been removed from the study.
+    """End-of-session battery. Per Documents/Study_proposal.md the only
+    remaining item is the preference debrief comparing the three forms."""
     g = QUESTIONNAIRE_GAP_SEC
     lines = [
         f"# Final session questionnaires - run ONCE after the third experimental block",
@@ -336,7 +340,11 @@ def main():
             lines, _ = render_block(form, block_letter, 0, include_task_lifecycle=True)
             write_lines(OUT_DIR / f"{form}_block_{block_letter}.txt", lines)
 
-    # 3. full_P01..P10.txt
+    # 3. final_questionnaires.txt (standalone copy at offset 0)
+    fin_lines, _ = render_final(0)
+    write_lines(OUT_DIR / "final_questionnaires.txt", fin_lines)
+
+    # 4. full_P01..P10.txt
     for pid, order in PARTICIPANT_ORDERS.items():
         all_lines = [
             f"# Full-session scenario for participant {pid}",

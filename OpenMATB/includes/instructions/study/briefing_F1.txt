@@ -1,6 +1,6 @@
 <h1>This block: Form 1 - Continuous status panel</h1>
 
-<p>For the next ~6 minutes, the system-monitoring task is supported by an <strong>automation aid</strong> that detects scale and light anomalies and resets them for you most of the time. The automation is reliable on roughly 75% of events. The remaining 25% it does not act on, and you must respond yourself by pressing the appropriate F-key.</p>
+<p>For the next ~5 minutes, the system-monitoring task is supported by an <strong>automation aid</strong> that detects scale and light anomalies and resets them for you most of the time. The automation is reliable on roughly 78% of events (7 out of 9). The remaining ~22% (2 out of 9) it does not act on, and you must respond yourself by pressing the appropriate F-key.</p>
 
 <p><strong>Information panel.</strong> A status panel will appear briefly each time the automation cycle reports its state. The panel will describe what the automation just observed and what it just did, including the events it did NOT handle. The panel uses routine status language (no alarms, no colour cues). Read each panel carefully when it appears - it contains every fact you need about the automation's behaviour.</p>
 
