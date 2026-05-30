@@ -1,6 +1,0 @@
-Trust_01_deceptive;The automation aid is deceptive.;Not at all/Extremely;1/7/4
-Trust_02_underhanded;The automation aid behaves in an underhanded manner.;Not at all/Extremely;1/7/4
-Trust_03_suspicious;I am suspicious of the automation aid's intent, action, or output.;Not at all/Extremely;1/7/4
-Trust_04_wary;I am wary of the automation aid.;Not at all/Extremely;1/7/4
-Trust_05_harmful;The automation aid's actions will have a harmful or injurious outcome.;Not at all/Extremely;1/7/4
-Trust_06_confident;I am confident in the automation aid.;Not at all/Extremely;1/7/4

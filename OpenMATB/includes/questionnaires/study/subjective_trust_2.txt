@@ -1,6 +1,0 @@
-Trust_07_security;The automation aid provides security.;Not at all/Extremely;1/7/4
-Trust_08_integrity;The automation aid has integrity.;Not at all/Extremely;1/7/4
-Trust_09_dependable;The automation aid is dependable.;Not at all/Extremely;1/7/4
-Trust_10_reliable;The automation aid is reliable.;Not at all/Extremely;1/7/4
-Trust_11_can_trust;I can trust the automation aid.;Not at all/Extremely;1/7/4
-Trust_12_familiar;I am familiar with the automation aid.;Not at all/Extremely;1/7/4

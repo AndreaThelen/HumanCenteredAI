@@ -30,6 +30,7 @@
 0:01:00;resman;pump-1-state;failure
 0:02:00;resman;pump-1-state;on
 0:02:30;resman;pump-2-state;failure
+0:02:50;resman;pump-2-state;off
 
 # End of practice
 0:03:00;sysmon;stop

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Regenerates the study scenario files.
-# Output: practice.txt, F{1,2,3}_block_{A,B,C}.txt, full_P01..P10.txt,
+# Output: practice.txt, F{1,2,3}_block_{A,B,C}.txt, full_P01..P{N_PARTICIPANTS}.txt,
 #         final_questionnaires.txt.
 # Tune the constants below and re-run; do not hand-edit the .txt files.
 #
@@ -24,7 +24,9 @@ EVENTS_PER_BLOCK        = 9
 EVENT_FIRST_OFFSET_SEC  = 30      # first sysmon event after task start
 EVENT_GAP_SEC           = 30      # spacing between sysmon events
 PANEL_DELAY_SEC         = 2       # panel fires this many seconds after the failure
-QUESTIONNAIRE_GAP_SEC   = 1       # space each post-block questionnaire by 1 s
+QUESTIONNAIRE_GAP_SEC   = 0       # fire questionnaire screens back-to-back. A >0
+                                  # gap lets the (paused) MATB task windows flash
+                                  # back into view between blocking screens.
 
 # --- Event pattern (length must equal EVENTS_PER_BLOCK) --------------------
 # R = routine auto-solved · NM = near-miss auto-solved · M = miss (no aid)
@@ -52,18 +54,29 @@ RESMAN_EVENTS = [
     (255, "pump-3-state", "on"),
 ]
 
-# --- Latin-square orderings for full_P01..P10 ------------------------------
+# --- Latin-square orderings -----------------------------------------------
+# Base counterbalancing set of 10 unique (form, block) orderings. Participants
+# beyond P10 replicate this set in order (P11 == P01, ..., P20 == P10), which
+# keeps the design balanced while providing spare, pre-counterbalanced scenarios
+# for replacements or extra recruitment. Bump N_PARTICIPANTS to generate more.
+N_PARTICIPANTS = 20
+
+_BASE_ORDERS = [
+    [("F1", "A"), ("F2", "B"), ("F3", "C")],
+    [("F1", "A"), ("F3", "B"), ("F2", "C")],
+    [("F2", "A"), ("F1", "B"), ("F3", "C")],
+    [("F2", "A"), ("F3", "B"), ("F1", "C")],
+    [("F3", "A"), ("F1", "B"), ("F2", "C")],
+    [("F3", "A"), ("F2", "B"), ("F1", "C")],
+    [("F1", "B"), ("F2", "C"), ("F3", "A")],
+    [("F2", "B"), ("F3", "C"), ("F1", "A")],
+    [("F3", "B"), ("F1", "C"), ("F2", "A")],
+    [("F1", "C"), ("F2", "A"), ("F3", "B")],
+]
+
 PARTICIPANT_ORDERS = {
-    "P01": [("F1", "A"), ("F2", "B"), ("F3", "C")],
-    "P02": [("F1", "A"), ("F3", "B"), ("F2", "C")],
-    "P03": [("F2", "A"), ("F1", "B"), ("F3", "C")],
-    "P04": [("F2", "A"), ("F3", "B"), ("F1", "C")],
-    "P05": [("F3", "A"), ("F1", "B"), ("F2", "C")],
-    "P06": [("F3", "A"), ("F2", "B"), ("F1", "C")],
-    "P07": [("F1", "B"), ("F2", "C"), ("F3", "A")],
-    "P08": [("F2", "B"), ("F3", "C"), ("F1", "A")],
-    "P09": [("F3", "B"), ("F1", "C"), ("F2", "A")],
-    "P10": [("F1", "C"), ("F2", "A"), ("F3", "B")],
+    f"P{i + 1:02d}": _BASE_ORDERS[i % len(_BASE_ORDERS)]
+    for i in range(N_PARTICIPANTS)
 }
 
 
@@ -184,17 +197,16 @@ def render_post_block_questionnaires(t0, block_letter):
     # Order is subjective-first, objective-probe-last (see tmp/proposal2.md S5):
     # the mental-model probe must not contaminate self-reported transparency/trust.
     #   1. subjective_transparency (4 items, researcher-designed)
-    #   2. subjective_trust        (12-item Jian/Bisantz 2000, verbatim)
+    #   2. subjective_trust        (4 items, plain-English, non-native-friendly;
+    #                               adapted from Jian/Bisantz 2000, reverse-worded
+    #                               distrust items dropped for clarity)
     #   3. mental_model_block_X    (objective probe, scored vs. ground truth)
-    # The trust scale is split across two files (_1, _2). genericscales renders
-    # every item on one screen and only logs the final page, so >6 items per file
-    # would overflow the screen and drop earlier responses; each file is its own
-    # blocking screen (<=6 items) and is logged on its own stop().
+    # genericscales renders every item on one screen and only logs the final page,
+    # so each file is kept <=6 items (one blocking screen, logged on its own stop()).
     items = [
         ("instructions",  "study/end_of_block.txt"),
         ("genericscales", "study/subjective_transparency.txt"),
-        ("genericscales", "study/subjective_trust_1.txt"),
-        ("genericscales", "study/subjective_trust_2.txt"),
+        ("genericscales", "study/subjective_trust.txt"),
         ("genericscales", f"study/mental_model_block_{block_letter}.txt"),
     ]
     last_t = t0
@@ -285,10 +297,15 @@ def render_practice(t0, include_task_lifecycle):
         lines.append(f"{hms(t0 + off)};communications;radioprompt;{prompt}")
     lines.append("")
 
+    # Every pump failure MUST be repaired before practice ends. In the full_PXX
+    # scenarios the tasks run continuously (no stop/restart between segments), so
+    # an unrepaired pump failure here would persist through all experimental
+    # blocks. Repair pump-2 back to its default 'off' (idle, usable) state.
     practice_resman = [
         ("pump-1-state", "failure", 60),
         ("pump-1-state", "on",      120),
         ("pump-2-state", "failure", 150),
+        ("pump-2-state", "off",     170),
     ]
     lines.append("# Practice resman pump events")
     for cmd, val, off in practice_resman:
@@ -353,7 +370,7 @@ def main():
     fin_lines, _ = render_final(0)
     write_lines(OUT_DIR / "final_questionnaires.txt", fin_lines)
 
-    # 4. full_P01..P10.txt
+    # 4. full_P01..P{N_PARTICIPANTS}.txt
     for pid, order in PARTICIPANT_ORDERS.items():
         all_lines = [
             f"# Full-session scenario for participant {pid}",
@@ -363,6 +380,8 @@ def main():
             f"# Set OpenMATB/config.ini -> scenario_path=study/full_{pid}.txt and run main.py once.",
             f"# Inter-segment task start/stop events are removed: tasks run continuously and are",
             f"# auto-paused whenever a blocking plugin (briefing/panel/questionnaire) is on screen.",
+            f"# The tasks are stopped once after the last block so OpenMATB auto-exits when the",
+            f"# final questionnaire is dismissed.",
             "",
         ]
 
@@ -382,21 +401,26 @@ def main():
             all_lines += block_lines
             cursor = block_end + 1
 
-        # Final questionnaires
+        # Stop the four MATB tasks once the last experimental block is over, BEFORE
+        # the end-of-session questionnaires. This (a) stops the task windows from
+        # flashing behind the final questionnaires and (b) lets OpenMATB auto-exit
+        # the moment the last questionnaire is dismissed: with no plugin left alive
+        # and no events queued, the scheduler closes the window by itself (no manual
+        # quit, no trailing seconds of the tasks running on).
+        all_lines += [
+            f"# === End of experiments: stop the four MATB tasks ===",
+            f"{hms(cursor)};sysmon;stop",
+            f"{hms(cursor)};communications;stop",
+            f"{hms(cursor)};scheduling;stop",
+            f"{hms(cursor)};resman;stop",
+            "",
+        ]
+
+        # Final questionnaires (run with the tasks already stopped)
         fin_lines, fin_end = render_final(cursor)
         all_lines.append(f"# === Segment 5: final_questionnaires"
                          f" ({hms(cursor)} - {hms(fin_end)}) ===")
         all_lines += fin_lines
-
-        # Stop the four MATB tasks at the very end
-        stop_t = fin_end + 8
-        all_lines += [
-            f"# === End of session: stop the four MATB tasks ===",
-            f"{hms(stop_t)};sysmon;stop",
-            f"{hms(stop_t)};communications;stop",
-            f"{hms(stop_t)};scheduling;stop",
-            f"{hms(stop_t)};resman;stop",
-        ]
 
         write_lines(OUT_DIR / f"full_{pid}.txt", all_lines)
 

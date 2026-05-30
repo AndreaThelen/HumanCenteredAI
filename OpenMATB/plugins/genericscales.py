@@ -5,6 +5,7 @@
 from plugins.abstractplugin import BlockingPlugin
 from core.widgets import Simpletext, Slider, Frame
 from core.constants import FONT_SIZES as F, PATHS as P, COLORS as C
+from core.window import Window
 from re import match as regex_match
 
 class Genericscales(BlockingPlugin):
@@ -75,6 +76,18 @@ class Genericscales(BlockingPlugin):
     def stop(self):
         for slider_name, slider_widget in self.sliders.items():
             self.log_performance(slider_widget.get_title(), slider_widget.get_value())
-        super().stop()
+        super().stop()  # hides (empty_batch) the current widgets
+
+        # One genericscales instance is reused for every questionnaire screen.
+        # Tear the screen down completely so the NEXT questionnaire starts from a
+        # clean slate. Without this, sliders from the previous screen survive in
+        # self.widgets and get re-shown at their old positions (the questionnaire
+        # appears pre-filled), and their mouse handlers keep firing.
+        for slider_widget in self.sliders.values():
+            Window.MainWindow.remove_handlers(slider_widget.on_mouse_press,
+                                              slider_widget.on_mouse_drag,
+                                              slider_widget.on_mouse_release)
+        self.sliders = dict()
+        self.widgets = dict()
 
 

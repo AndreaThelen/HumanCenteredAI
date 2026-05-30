@@ -1,6 +1,6 @@
-# Full-session scenario for participant P05
+# Full-session scenario for participant P15
 # Order: practice -> F3_block_A -> F1_block_B -> F2_block_C -> final_questionnaires
-# Set OpenMATB/config.ini -> scenario_path=study/full_P05.txt and run main.py once.
+# Set OpenMATB/config.ini -> scenario_path=study/full_P15.txt and run main.py once.
 # Inter-segment task start/stop events are removed: tasks run continuously and are
 # auto-paused whenever a blocking plugin (briefing/panel/questionnaire) is on screen.
 # The tasks are stopped once after the last block so OpenMATB auto-exits when the

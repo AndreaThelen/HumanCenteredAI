@@ -1,10 +1,10 @@
 <h1>Practice block</h1>
 
-<p>You will now practise the four MATB tasks for about three minutes WITHOUT any automation aid. Use this time to get used to the task layout, the keyboard mapping, and the pace.</p>
+<p>You will now practise the three MATB tasks for about three minutes WITHOUT any automation aid. Use this time to get used to the task layout, the keyboard mapping, and the pace.</p>
 
 <p><strong>System monitoring (top-left).</strong> Press F1-F4 if a scale arrow drifts to the end of its ladder. Press F5 if the green OK light goes off, F6 if the red WARNING light comes on.</p>
 
-<p><strong>Communications (bottom-left).</strong> Listen for radio messages addressed to YOUR callsign and tune the requested radio to the requested frequency.</p>
+<p><strong>Communications (bottom-left).</strong> Listen for radio messages addressed to YOUR callsign. Use the UP/DOWN arrow keys to select the requested radio, the LEFT/RIGHT arrow keys to tune it to the requested frequency, and then press ENTER to confirm your response. Your response is only recorded once you press ENTER; if you do not confirm, the call counts as missed.</p>
 
 <p><strong>Resource management (bottom-mid).</strong> Keep tank A and tank B levels inside the band by toggling pumps with the number keys.</p>
 
