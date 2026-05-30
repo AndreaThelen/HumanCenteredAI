@@ -1,11 +1,11 @@
 <h1>This block: Form 1 - Continuous status panel</h1>
 
-<p>For the next ~5 minutes, the system-monitoring task is supported by an <strong>automation aid</strong> that detects scale and light anomalies and resets them for you most of the time. The automation is reliable on roughly 78% of events (7 out of 9). The remaining ~22% (2 out of 9) it does not act on, and you must respond yourself by pressing the appropriate F-key.</p>
+<p>For the next ~5 minutes the system-monitoring task is supported by an <strong>automation aid</strong> that detects out-of-range indicators and corrects most of them for you. The aid is <strong>not perfect</strong>: on some events it will not act, and you must then respond yourself by pressing the appropriate F-key.</p>
 
-<p><strong>Information panel.</strong> A status panel will appear briefly each time the automation cycle reports its state. The panel will describe what the automation just observed and what it just did, including the events it did NOT handle. The panel uses routine status language (no alarms, no colour cues). Read each panel carefully when it appears - it contains every fact you need about the automation's behaviour.</p>
+<p><strong>Information panel.</strong> A panel appears on <strong>every</strong> automation cycle and reports, in routine status language (no alarms, no colour cues), what the aid just observed and did - including any event it did NOT handle. Read each panel: it contains every fact about the aid's behaviour.</p>
 
-<p>During the visibility of the panel, the tasks do pause. Press SPACE on each panel to dismiss it and return to the tasks.</p>
+<p>While a panel is on screen the MATB tasks <strong>pause</strong>; press SPACE to dismiss the panel and resume.</p>
 
-<p>The other two MATB tasks (communications, resource management) continue throughout. They are NOT supported by the automation - your manual responses to them are recorded.</p>
+<p>The <strong>communications</strong> and <strong>resource-management</strong> tasks are not supported by the aid and continue throughout; your responses to them are recorded. The <strong>scheduling</strong> timetable (top-right) is a display only.</p>
 
 <p>Press SPACE to begin.</p>

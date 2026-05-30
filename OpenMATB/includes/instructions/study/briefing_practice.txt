@@ -8,6 +8,6 @@
 
 <p><strong>Resource management (bottom-mid).</strong> Keep tank A and tank B levels inside the band by toggling pumps with the number keys.</p>
 
-<p><strong>Scheduling (top-right).</strong> Track the upcoming task timetable.</p>
+<p><strong>Scheduling (top-right).</strong> A timetable showing when each task is active. This is a display only - no response is needed.</p>
 
 <p>The practice is untimed in the sense that no scoring data are kept. Press SPACE when you are ready to begin.</p>

@@ -118,10 +118,14 @@
 # 8. Post-block questionnaire battery
 0:08:02;instructions;filename;study/end_of_block.txt
 0:08:02;instructions;start
-0:08:03;genericscales;filename;study/mental_model_block_A.txt
+0:08:03;genericscales;filename;study/subjective_transparency.txt
 0:08:03;genericscales;start
-0:08:04;genericscales;filename;study/subjective_transparency.txt
+0:08:04;genericscales;filename;study/subjective_trust_1.txt
 0:08:04;genericscales;start
+0:08:05;genericscales;filename;study/subjective_trust_2.txt
+0:08:05;genericscales;start
+0:08:06;genericscales;filename;study/mental_model_block_A.txt
+0:08:06;genericscales;start
 
 # === Segment 3: F2_block_B (0:08:07 - 0:13:12) ===
 # Study scenario - Form F2, Block B
@@ -203,10 +207,14 @@
 # 8. Post-block questionnaire battery
 0:13:08;instructions;filename;study/end_of_block.txt
 0:13:08;instructions;start
-0:13:09;genericscales;filename;study/mental_model_block_B.txt
+0:13:09;genericscales;filename;study/subjective_transparency.txt
 0:13:09;genericscales;start
-0:13:10;genericscales;filename;study/subjective_transparency.txt
+0:13:10;genericscales;filename;study/subjective_trust_1.txt
 0:13:10;genericscales;start
+0:13:11;genericscales;filename;study/subjective_trust_2.txt
+0:13:11;genericscales;start
+0:13:12;genericscales;filename;study/mental_model_block_B.txt
+0:13:12;genericscales;start
 
 # === Segment 4: F1_block_C (0:13:13 - 0:18:18) ===
 # Study scenario - Form F1, Block C
@@ -298,10 +306,14 @@
 # 8. Post-block questionnaire battery
 0:18:14;instructions;filename;study/end_of_block.txt
 0:18:14;instructions;start
-0:18:15;genericscales;filename;study/mental_model_block_C.txt
+0:18:15;genericscales;filename;study/subjective_transparency.txt
 0:18:15;genericscales;start
-0:18:16;genericscales;filename;study/subjective_transparency.txt
+0:18:16;genericscales;filename;study/subjective_trust_1.txt
 0:18:16;genericscales;start
+0:18:17;genericscales;filename;study/subjective_trust_2.txt
+0:18:17;genericscales;start
+0:18:18;genericscales;filename;study/mental_model_block_C.txt
+0:18:18;genericscales;start
 
 # === Segment 5: final_questionnaires (0:18:19 - 0:18:20) ===
 # Final session questionnaires - run ONCE after the third experimental block

@@ -1,0 +1,62 @@
+Scoring Criteria
+Aspect
+Points
+Comments
+Max.
+Content
+Idea
+: complexity, novelty, creativity of the idea
+Structure
+Abstract
+: short and precise overview about the different aspects
+Introduction
+: clarify relevance and motivation, arouse curiosity
+Relevance
+: emphasis on important aspects, separation of important and unimportant aspects
+Background
+: existing literature and reference to the lecture, definition of relevant terms
+Own focus
+: research gap, research question, and hypothesis, including reasons for them !!
+Data acquisition
+: how many, who was recruited (family, friends) and how, demographics (e.g. age, gender distribution per group)
+Reference to other groups
+: e.g. similarities, overlaps, differences, potential integrations or combinations
+Conclusion
+: summary of important points at the end
+Formal aspects
+Overall score
+Citation
+: correctness of the citation (APA7, in text and bibliography, incl. MATB)
+Experimental Setup
+: description of the experiment (incl. MATB, which questionnaire and why with citation and - if applicable - reasons for changes, different groups or conditions, information about briefing and debriefing, etc.)
+Final score
+Bonus
+: aspects that exceed expectations, such as special effort, e.g. a high number of test subjects, particularly complex data analysis, outstanding consideration of control factors, or balancing control variables between different groups
+Structure of the paper
+: intuitive, recognizable, and logical structure with transitions between different parts of the paper, creation of a coherent connection
+Correct file naming
+: all files (both the .zip file and all files contained therein such as MATB folder, report, data) are named as follows (here as an example for the report) ‘group_name_name1_name2_name3_report.pdf’
+Structured code and data
+: the raw data is nicely structured so that it can be easily understood, used, and reanalysed by other people (e.g. us) and the analysis file is commented and it is clear what was done and how (e.g. plots, statistics)
+Min.
+Formal requirement: Points will be deducted if the criteria are not met.
+Title
+: Meaningful, precise, concise, and accurate title
+Data analysis
+: comprehensible data analysis (e.g. using plots or statistical methods) that is appropriate for and in line with the hypothesis; if applicable: clear differentiation between hypothesis testing and additional exploratory analysis; if applicable: report of assumptions tests for statistical tests
+neutral, objective report of the results including clear and readable illustrations with captions
+May be added at our discretion if requirements are exceeded, otherwise zero. They are not required for full points, but can compensate for lost points if necessary.
+Comprehensibility
+: comprehensible and coherent presentation, text is understandable, figures and graph labels are of an appropriate size
+Discussion
+: short summary of the results, discussion and interpretation of the results, critical reflection of the study and evaluation of the research question, reference to existing literature (already listed 
+and
+ new literature that was not mentioned yet in the introduction), limitations, future research
+Maximum pages
+: the maximum number of pages (including illustrations, abstract, etc., sole exception: EXCLUDING bibliography, acknowledgements) has been adhered to (
+anything beyond this will be ignored and assessed as ‘not available’
+), appendix NOT allowed
+All files uploaded
+ (on time): raw data as .csv (without personal information such as names), code for the analysis and plot generation, MATB scenarios, short demo video of the experiment, any other useful file (
+you will not receive a grade anyway before we have all files
+)

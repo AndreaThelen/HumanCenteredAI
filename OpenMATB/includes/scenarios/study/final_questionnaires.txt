@@ -1,4 +1,4 @@
-# Final session questionnaires - run ONCE after the third experimental block.
+# Final session questionnaires - run ONCE after the third experimental block
 
 0:00:00;instructions;filename;study/end_of_session.txt
 0:00:00;instructions;start
@@ -6,3 +6,4 @@
 # End-of-session preference comparison across the three forms
 0:00:01;genericscales;filename;study/preference_debrief.txt
 0:00:01;genericscales;start
+

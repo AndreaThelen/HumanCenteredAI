@@ -90,8 +90,12 @@
 # 8. Post-block questionnaire battery
 0:05:01;instructions;filename;study/end_of_block.txt
 0:05:01;instructions;start
-0:05:02;genericscales;filename;study/mental_model_block_C.txt
+0:05:02;genericscales;filename;study/subjective_transparency.txt
 0:05:02;genericscales;start
-0:05:03;genericscales;filename;study/subjective_transparency.txt
+0:05:03;genericscales;filename;study/subjective_trust_1.txt
 0:05:03;genericscales;start
+0:05:04;genericscales;filename;study/subjective_trust_2.txt
+0:05:04;genericscales;start
+0:05:05;genericscales;filename;study/mental_model_block_C.txt
+0:05:05;genericscales;start
 

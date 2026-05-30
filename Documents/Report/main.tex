@@ -1,0 +1,208 @@
+\documentclass[10pt,twocolumn]{article}
+
+% ---------- PACKAGES ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{geometry}
+\geometry{margin=1.8cm}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault} % sans-serif
+
+
+\pgfplotsset{compat=1.18} % oder aktuelle Version
+\usepackage[style=apa, backend=biber, sortcites=true, doi=false, isbn=false, url=true, giveninits=true]{biblatex}
+\DeclareLanguageMapping{british}{british-apa}
+
+\addbibresource{references.bib}
+
+% ---------- TITLE & AUTHOR ----------
+\title{\textbf{Form of Explanation: Explainability vs.\ Explicability of an Automation Aid under Multitasking Load}}
+\author{
+\begin{tabular}{c}
+Lilian Obidike$^{1}$, Sheethal Mohan Prabhu$^{1}$ and Andrea Thelen$^{1}$\\[2pt]
+\small $^{1}$Institute of Information Systems, University of Lübeck, Lübeck, Germany\\
+\small \texttt{Group Z --- Human-Centered Trustworthy AI (CS5076-KP12)}
+\end{tabular}
+}
+\date{}
+
+% ---------- SECTION FORMATTING ----------
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{0.5em}{}
+
+% ---------- BEGIN DOCUMENT ----------
+\begin{document}
+
+\twocolumn[
+
+\maketitle
+
+% ---------- HIGHLIGHTED ABSTRACT ----------
+\begin{center}
+\begin{minipage}{0.95\textwidth}
+\setstretch{1.0}
+
+\textbf{Introduction:} When an automation aid explains its reasoning, two systems can be equally \textit{transparent} on paper yet differ in whether the operator actually understands and acts on the explanation. We separate \textit{explainability} (the system producing an explanation) from \textit{explicability} (the explanation being understood and used), and ask whether the \textit{form} of an explanation matters when the action-relevant information it contains is held constant.
+\textbf{Methods:} In a within-subjects study on the OpenMATB multitasking platform, participants supervise a partially reliable automation aid under three forms of explanation: verbose/always-on (F1), selective and contrastive (F2), and selective, contrastive and actionable (F3). Subjective transparency and trust, an objective mental-model probe, miss-detection, aid overwrites, and non-automated task performance are recorded after counterbalanced blocks.
+\textbf{Results:} \textit{[To be completed after data collection and analysis.]}
+\textbf{Discussion:} \textit{[To be completed.]}
+\textbf{Conclusion:} \textit{[To be completed.]}
+\vspace{0.5em}
+
+
+\vspace{0.5em}
+
+\textbf{Keywords:} Transparency, Explainability, Explicability, Trust in Automation, Multitasking, OpenMATB
+\end{minipage}
+\end{center}
+
+\vspace{1em}
+]
+
+% ---------- INTRODUCTION ----------
+\section{Introduction}
+
+People increasingly supervise rather than directly operate automated systems, from aviation flight decks to medical monitoring and driver-assistance aids. In these settings the human is expected to step in when the automation reaches the edge of its competence, which presupposes that the operator understands what the system is doing and why. To support this, systems are designed to be \textit{transparent} and to \textit{explain} their behaviour. A growing body of work in explainable artificial intelligence (XAI), however, reports a worrying dissociation: explanations can raise users' confidence and feeling of being informed without improving their ability to detect when the system is wrong \parencite{Bansal2021,WangYin2021}.
+
+A subtle but important point is often left implicit in this literature. Producing an explanation is not the same as the explanation being understood and acted upon. We refer to the former as \textit{explainability} and to the latter as \textit{explicability}. Most studies that manipulate transparency vary \textit{how much} information the system communicates \parencite{Mercado2016,Stowers2017}, conflating the \textit{content} of an explanation with its \textit{form} (its length, framing, and presentation). It therefore remains unclear whether the form of an explanation, on its own, shapes how well an operator's mental model is updated, particularly when attention is divided across competing tasks.
+
+This report investigates that question. Holding the action-relevant information constant, we compare three forms of explanation delivered by an automation aid in a multitasking environment and measure both subjective responses (perceived transparency and trust) and an objective indicator of whether the operator's mental model was actually updated. The remainder of the report is structured as follows. Section~2 reviews the relevant lecture content and literature and defines our central terms. Section~3 states the research gap, question, and hypotheses. Section~4 describes the study design, materials, procedure, and measures. Sections~5--7 report the results, discuss them in relation to prior work, and conclude.
+
+% ---------- BACKGROUND ----------
+\section{Background}
+
+\subsection{Definitions of terms}
+We distinguish three related but separate constructs that recur throughout the lecture and the literature.
+
+\textit{Transparency} is the degree to which a system provides the operator with insight into its inner workings, intentions, and reasoning process. Frameworks such as the Situation Awareness-based Agent Transparency (SAT) model describe transparency in terms of \textit{levels} of information the agent communicates --- what it is doing, why, and what it predicts \parencite{Chen2014,Mercado2016}.
+
+\textit{Explainability} is the system's act of producing an explanation of what it did and how. It is a property of the system's output.
+
+\textit{Explicability} is whether that explanation is presented in a way that it is actually understood and processed by the operator. It is a property of the human--system interaction, not of the output alone. Two explanations can be equally explainable (containing the same facts) yet differ in explicability.
+
+\textit{Trustworthiness} is a broad concept; in this study we focus on \textit{subjective trust in the automation aid} --- the operator's felt confidence, perceived dependability, and reliance on the aid --- which we measure with established trust-in-automation items \parencite{Jian2000}.
+
+\subsection{Relation to the lecture}
+The project is anchored in two lecture topics. The \textit{transparency} block addresses the question of what level of information an aid should communicate to the operator. The \textit{explainability and explicability} block introduces criteria for good explanations --- among them \textit{selectivity} (an explanation should pick out the relevant causes rather than report everything), \textit{contrastiveness} (explaining why \textit{this} happened rather than some expected alternative), and \textit{actionability} (telling the operator what to do). These criteria, drawn from the social-science account of explanation \parencite{Miller2019}, motivate the three forms of explanation we compare.
+
+\subsection{Prior empirical work}
+Transparency studies in human--agent teaming show that giving operators more information about an agent's reasoning and uncertainty can improve trust calibration and decision quality \parencite{Mercado2016,Stowers2017}. These studies vary the \textit{level} of information but do not separate information \textit{content} from \textit{presentation}. In parallel, XAI research on AI-assisted decision-making finds that explanations frequently increase users' agreement and subjective sense of understanding without a matching increase in objective understanding or error detection \parencite{Bansal2021,WangYin2021}. Crucially, these dissociation findings come almost entirely from single-task settings, where the user can devote full attention to the explanation.
+
+\subsection{Research gap}
+Two gaps follow. First, prior transparency work confounds the content of an explanation with its form; it is therefore not known whether form alone --- holding action-relevant content constant --- affects perceived transparency, trust, and the operator's mental model. Second, the explainability--explicability dissociation has been demonstrated under full attention but not under \textit{multitasking load}, the very condition under which supervisory operators usually work. If a long, status-log-style explanation makes operators feel informed without enabling them to anticipate the system's next action, they may miss automation errors with far-reaching consequences in domains such as aviation, medical monitoring, and autonomous driving aids.
+
+% ---------- OWN FOCUS ----------
+\section{Research Question and Hypotheses}
+
+\textbf{Research question.} Does the form of an automation aid's reasoning explanation --- holding action-relevant information constant --- change subjective transparency and whether the operator's mental model actually updates under multitasking load?
+
+We compare three forms of explanation that all communicate the same action-relevant facts (see Section~\ref{sec:forms}). The comparison is therefore between \textit{forms} of explanation, not between explanation and no explanation. Hypotheses H1 and H2 jointly instantiate the explainability~$\neq$~explicability crossover and form the main hypothesis; H3 and H4 are supporting.
+
+\begin{description}
+  \item[H1 (subjective favours verbose).] Participants will rate the verbose always-on explanation (F1) as more transparent and more trustworthy than the selective explanations (F2/F3), even when action-relevant information is held constant.
+  \item[H2 (form modulates explicability).] Participants will achieve higher post-block mental-model accuracy under selective and contrastive explanations (F2/F3) than under the verbose always-on explanation (F1), even when action-relevant information is held constant.
+  \item[H3 (selectivity directs attention).] (A)~Participants will detect a higher proportion of automation-missed events under F2/F3 than under F1. (B)~Participants will be less likely to overwrite the aid when it was in fact correct under F2/F3 than under F1.
+  \item[H4 (saved attention is redeployed).] Participants will achieve higher performance on the non-automated tasks (communications and resource management) under F2/F3 than under F1.
+\end{description}
+
+The reasoning behind H1 is that a continuous, detailed stream of information makes the system \textit{feel} maximally informative. H2--H4 follow from the prediction that selectivity, contrastiveness, and actionability make the same information easier to process under load, freeing attention and directing it to the events that matter.
+
+% ---------- METHOD ----------
+\section{Method}
+
+\subsection{Participants}
+We plan to recruit approximately ten participants from the experimenters' personal environment (fellow students, friends, family), consistent with the scope of this pilot study. Because we use a within-subjects design, every participant contributes to all three conditions. Demographic data (age, gender) are collected and reported. As this is a small pilot rather than a study intended for population-level conclusions, no ethical approval was required. \textit{[Final sample size and demographics to be reported after data collection.]}
+
+\subsection{Materials and apparatus}
+The study runs on \textbf{OpenMATB} \parencite{Cegarra2020}, an open-source reimplementation of NASA's Multi-Attribute Task Battery \parencite{Comstock1992}. OpenMATB presents several supervisory subtasks concurrently; we use three of them: \textit{system monitoring} (watching gauges and warning lights and responding to out-of-range states), \textit{communications}, and \textit{resource management} (pump and tank management). System monitoring is the only subtask supported by an automation aid; the other two compete for attention and are never aided.
+
+The automation aid operates on the system-monitoring task at approximately 78\% reliability. Every automation miss is communicated to the operator, so that --- if the information is perceived and processed --- the operator can still handle the event manually. The aid's behaviour is identical across conditions; only the \textit{form} of the explanation panel changes.
+
+\subsubsection{The three forms of explanation}
+\label{sec:forms}
+All three forms communicate the aid's reasoning and contain the same action-relevant facts; they differ only in selectivity, contrastiveness, framing, and the presence of an actionable cue (Table~\ref{tab:forms}). This content matching is the core of the design: the information an operator needs to catch an automation failure is equally present in F1, F2, and F3.
+
+\begin{table}[htbp]
+\centering
+\caption{The three forms of explanation. All forms communicate the same action-relevant facts; F1 embeds them in a routine always-on stream, F2 reframes them selectively and contrastively, and F3 adds an explicit operator cue.}
+\label{tab:forms}
+\begin{tabular}{@{}p{0.07\columnwidth}p{0.82\columnwidth}@{}}
+\toprule
+ & Description and example panel text \\ \midrule
+F1 & \textit{Verbose / always-on.} Routine status update on every automation cycle. E.g.\ ``Scale-1: was 47.3 $>$ upper bound 45.0 for 1.0\,s -- reset to 32.0. Scale-2: 31.5, in range. \dots\ Lights: OK.'' \\[4pt]
+F2 & \textit{Selective + contrastive.} Panel appears only on a near-miss or miss; same necessary facts as F1, reframed. E.g.\ ``Reset scale-1 -- would have failed in $\sim$2.5\,s.''; ``Skipped scale-2 -- auto-aid did not act.'' \\[4pt]
+F3 & \textit{Selective + contrastive + actionable.} F2 plus an explicit operator cue on misses. E.g.\ ``Skipped scale-2 -- auto-aid did not act. \textit{Check scale-2 manually.}'' \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Design}
+The study uses a within-subjects design. Each participant completes all three forms (F1/F2/F3), each paired with one of three different gauge sets (A, B, C). The gauge sets contain different subsets of gauges and lights requiring attention, so that the post-block memory probe cannot be answered from another block's content. The order of F1/F2/F3 is counterbalanced across participants to mitigate learning and order effects.
+
+\subsection{Procedure}
+Each session lasts approximately 20 minutes: a 3-minute practice phase, followed by three 5-minute experimental blocks (one per form), followed by a debriefing. After each block three questionnaires are administered in a fixed order --- subjective transparency, subjective trust, and the objective mental-model probe --- with the two self-report measures placed first so that the objective probe cannot contaminate them (a participant who realises mid-probe that they misjudged the aid might otherwise revise their reported transparency or trust). The platform logs behaviour continuously, and one final preference questionnaire is completed at the end.
+
+\subsubsection{Briefing and debriefing}
+During the \textit{briefing}, participants are told in clear terms that they will interact with different AI-supported versions of a monitoring system and then answer questions about their experience, that participation is voluntary and can be stopped at any time, and that responses are confidential and used only for research. To avoid biasing behaviour, the concrete research question, the hypotheses, and our expectations about the outcome are \textit{not} disclosed beforehand. The true purpose of the study --- the comparison of explanation forms and the explainability/explicability dissociation --- is explained afterwards in the \textit{debriefing}.
+
+\subsection{Measures and operationalisation}
+Each measure maps onto a specific hypothesis.
+
+\textit{Mental-model probe (H1, H2; objective).} After each block the participant answers a short objective probe. For each candidate indicator --- the four scales in the scale blocks, or the two warning lights plus two scale distractors in the lights block --- they make a yes/no judgement of whether the aid acted on it during the block; they then estimate how many out-of-range events the aid failed to handle and the aid's overall reliability. Responses are scored against the scenario ground truth (set identification as a Hamming distance from the true responsibility set, absolute miss-count error, and absolute reliability error) to yield an objective explicability (mental-model accuracy) score. A subjective-predictability item used in earlier drafts was dropped: because the aid's failures are drawn from a stationary random process, the next failure is by construction not predictable beyond the base rate, so the item could not validly discriminate the three forms.
+
+\textit{Subjective transparency (H1).} Four ratings capture the feeling of being informed: that the system told the operator what it was doing, that they understood why it acted or did not act, that it made clear which indicator to attend to next, and that the amount of information felt about right (an item on which both too little and too much are unfavourable). We deliberately use researcher-designed items here rather than a validated instrument. Prior transparency studies manipulated transparency as an independent variable and did not measure it with a subjective scale \parencite{Mercado2016,Stowers2017}, and comparable XAI work relied on study-specific subjective-understanding items \parencite{WangYin2021}; moreover, published explanation-satisfaction scales were built for a discrete explanation attached to a one-shot decision and consumed under full attention, and their detail-monotone items would let the verbose form (F1) score highest by construction, biasing H1 before data collection. Paired with the probe, these items test the H1 dissociation between feeling informed and being accurate.
+
+\textit{Subjective trust (H1).} Subjective trust is measured with the full 12-item Trust in Automated Systems scale \parencite{Jian2000}, administered verbatim except that the referent is relabelled ``the automation aid'' so that participants rate the monitoring aid specifically rather than the platform as a whole. Five items are negatively worded (e.g.\ ``the aid is deceptive'', ``I am wary of the aid'') and reverse-scored, providing an acquiescence check, and the remainder are positively worded (e.g.\ ``the aid is dependable'', ``reliable'', ``I can trust the aid''). In contrast to transparency, trust is an attitude that transfers to our task unchanged, so a validated scale is appropriate and yields direct comparability with the transparency-paradigm literature \parencite{Mercado2016}.
+
+\textit{Detection of automation misses (H3A; log).} Whenever the aid skips an event the operator should catch it manually; we log hit/miss and reaction time.
+
+\textit{Detection of aid overwrites (H3B; log).} Whenever the aid correctly handles an event the operator should not intervene; we log unnecessary interventions.
+
+\textit{Non-automated task performance (H4; log).} Communications and resource-management performance are logged to test whether reading less in the explanation panel frees attention for the unaided tasks.
+
+\subsection{Planned analysis}
+Given the small expected sample, analysis will emphasise descriptive statistics (means, medians, standard deviations) and visual evaluation (e.g.\ boxplots and bar charts with error bars comparing F1/F2/F3, and scatter plots relating subjective transparency to objective mental-model accuracy). Where a confirmatory test is appropriate and its assumptions can be checked, within-subjects comparisons across the three forms will be reported, with assumption tests stated explicitly. Any analysis beyond the pre-registered hypotheses will be labelled as exploratory. \textit{[Final analysis and tooling to be reported with the results.]}
+
+% ---------- RESULTS ----------
+\section{Results}
+\textit{[To be completed after data collection. This section will report, per hypothesis, the descriptive statistics and figures comparing the three forms of explanation: subjective transparency and trust (H1), objective mental-model accuracy (H2), miss-detection and overwrite rates (H3), and non-automated task performance (H4). Figures will include clear captions and an objective, neutral description of what is shown.]}
+
+% ---------- DISCUSSION ----------
+\section{Discussion}
+\textit{[To be completed after results are available. Planned structure: (i) a short summary of the main findings; (ii) interpretation in relation to each hypothesis and to the research question, stating whether the explainability~$\neq$~explicability crossover (H1 vs.\ H2) was observed; (iii) links to prior work \parencite{Mercado2016,Stowers2017,Bansal2021,WangYin2021} plus at least one source not used above; (iv) a reference to the approaches taken by the other project groups; (v) critical reflection and limitations; and (vi) directions for future research.]}
+
+\textit{Known limitations to be discussed.} F1~$\rightarrow$~F2 changes three factors simultaneously (selectivity, contrastiveness, and framing) and is therefore treated as a package-level test of ``form'' rather than three isolated effects; the F3~$-$~F2 contrast isolates the actionable cue. Load is held at a single moderate level, so generalisation across load levels is not possible. The number of automation misses per block is small (two per five-minute block, the aid running at about 78\% reliability), and the sample size is far below the 50--100 participants typical in this literature, so statistical power is limited.
+
+% ---------- CONCLUSION ----------
+\section{Conclusion}
+\textit{[To be completed after the discussion. This section will recap the key findings, state what they imply for designing explanations of automation aids under multitasking load, and give a brief outlook.]}
+
+% ------------------------------------------------------------------------------------------
+%
+% Everything until here needs to be within the 6 pages.
+% Only the acknowledgements and references are allowed to be on an additional page.
+%
+% ------------------------------------------------------------------------------------------
+
+% ---------- ACKNOWLEDGEMENTS ----------
+\section*{Acknowledgements}
+We thank Rebecca von Engelhardt and Nele Rußwinkel for the project framework and feedback, and our study participants for their time.
+
+% ---------- REFERENCES ----------
+\printbibliography
+
+\end{document}

@@ -1,0 +1,48 @@
+{
+  "latex-workshop.latex.recipe.default": "pdflatex -> biber -> pdflatex x2",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex -> biber -> pdflatex x2",
+      "tools": ["pdflatex", "biber", "pdflatex", "pdflatex"]
+    },
+    {
+      "name": "latexmk (auto bibliography, needs Perl)",
+      "tools": ["latexmk"]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": [
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-synctex=1",
+        "-file-line-error",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "pdflatex",
+      "command": "pdflatex",
+      "args": [
+        "-interaction=nonstopmode",
+        "-synctex=1",
+        "-file-line-error",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": ["%DOCFILE%"],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux", "*.bcf", "*.bbl", "*.blg", "*.fdb_latexmk", "*.fls",
+    "*.log", "*.out", "*.run.xml", "*.synctex.gz", "*.toc"
+  ]
+}

@@ -1,5 +1,6 @@
-MM_B_q1_what_acted;During this block, the automation managed the WARNING LIGHTS. On how many of the two lights (light-1 OK indicator and light-2 WARNING) did it act?;0/2 lights;0/2/2
-MM_B_q2_skipped;On how many occasions did the automation FAIL to reset a light that needed attention during this block?;0/9 misses;0/9/2
-MM_B_q3_which_lights;Move the slider toward "lights" if the automation's domain in this block was the warning lights, or away if you believe it was a different pair of indicators.;A different pair/The two lights;1/7/4
-MM_B_q4_reliability;What proportion of light-anomaly events did the automation correctly handle? Estimate as a percentage.;0%/100%;0/100/78
-MM_B_q5_predictability;How confidently could you predict, before each event, whether the automation would act?;Not at all/With high confidence;1/7/4
+MM_B_set_light1;Did the automation correct Warning light 1 at any point during this block?;No/Yes;0/1/0
+MM_B_set_light2;Did the automation correct Warning light 2 at any point during this block?;No/Yes;0/1/0
+MM_B_set_scale1;Did the automation reset Scale 1 at any point during this block?;No/Yes;0/1/0
+MM_B_set_scale2;Did the automation reset Scale 2 at any point during this block?;No/Yes;0/1/0
+MM_B_q_skipped;On how many occasions did the automation FAIL to act on an indicator that was out of range during this block?;0 times/9 times;0/9/0
+MM_B_q_reliability;Of all the out-of-range events this block, what percentage did the automation handle correctly? (Please move the slider, the start value is uninformative.);0%/100%;0/100/50

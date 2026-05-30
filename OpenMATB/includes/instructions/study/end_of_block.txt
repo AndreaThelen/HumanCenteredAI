@@ -2,6 +2,6 @@
 
 <p>This block is over. You will now answer a short series of questions about what you observed.</p>
 
-<p>Move each slider to the position that best matches your experience and press SPACE to confirm.</p>
+<p>The questions are spread over several screens. On each screen, move every slider to the position that best matches your experience, then press SPACE to confirm and continue to the next screen.</p>
 
 <p>Press SPACE to start the questionnaires.</p>

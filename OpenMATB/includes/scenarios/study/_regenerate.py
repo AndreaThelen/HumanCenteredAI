@@ -181,12 +181,21 @@ def render_post_block_questionnaires(t0, block_letter):
     """Returns (lines, end_time_sec) where end_time is when the last item fires."""
     g = QUESTIONNAIRE_GAP_SEC
     out = ["# 8. Post-block questionnaire battery"]
-    # Per Documents/Study_proposal.md the battery is just the mental-model
-    # probe and the subjective-transparency rating.
+    # Order is subjective-first, objective-probe-last (see tmp/proposal2.md S5):
+    # the mental-model probe must not contaminate self-reported transparency/trust.
+    #   1. subjective_transparency (4 items, researcher-designed)
+    #   2. subjective_trust        (12-item Jian/Bisantz 2000, verbatim)
+    #   3. mental_model_block_X    (objective probe, scored vs. ground truth)
+    # The trust scale is split across two files (_1, _2). genericscales renders
+    # every item on one screen and only logs the final page, so >6 items per file
+    # would overflow the screen and drop earlier responses; each file is its own
+    # blocking screen (<=6 items) and is logged on its own stop().
     items = [
         ("instructions",  "study/end_of_block.txt"),
-        ("genericscales", f"study/mental_model_block_{block_letter}.txt"),
         ("genericscales", "study/subjective_transparency.txt"),
+        ("genericscales", "study/subjective_trust_1.txt"),
+        ("genericscales", "study/subjective_trust_2.txt"),
+        ("genericscales", f"study/mental_model_block_{block_letter}.txt"),
     ]
     last_t = t0
     for i, (plugin, fname) in enumerate(items):
