@@ -90,3 +90,24 @@ def test_find_study_sessions_filters_and_reads(tmp_path):
     assert len(sessions) == 1
     assert sessions[0].participant == "P01"
     assert sessions[0].scenario_kind == "full"
+
+
+def test_segment_blocks_dedupes_event_and_parameter_briefing_rows():
+    """Real logs fire an `event` and a `parameter` briefing row ~6ms apart at
+    DIFFERENT scenario_times. Both must collapse to one block per form."""
+    rows = [
+        (1.0, 10.000, "event",     "instructions", "filename", "study/briefing_F1.txt"),
+        (1.1, 10.006, "parameter", "instructions", "filename", "study/briefing_F1.txt"),
+        (1.2, 12.0,   "event",     "instructions", "filename", "study/panels/F1/block_A_event_01.txt"),
+        (1.3, 13.0,   "performance","resman",      "a_deviation", "20"),
+        (2.0, 30.000, "event",     "instructions", "filename", "study/briefing_F2.txt"),
+        (2.1, 30.006, "parameter", "instructions", "filename", "study/briefing_F2.txt"),
+        (2.2, 31.0,   "event",     "instructions", "filename", "study/panels/F2/block_B_event_03.txt"),
+    ]
+    df = pd.DataFrame(rows, columns=["logtime", "scenario_time", "type",
+                                     "module", "address", "value"])
+    blocks = segment_blocks(df)
+    assert [b.form for b in blocks] == ["F1", "F2"]
+    assert [b.block_letter for b in blocks] == ["A", "B"]
+    assert blocks[0].start_time == 10.0
+    assert blocks[0].end_time == 30.0  # next briefing's EVENT row, not the parameter dup

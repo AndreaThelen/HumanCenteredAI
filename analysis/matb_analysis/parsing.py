@@ -40,23 +40,28 @@ def load_raw(path: str | Path) -> pd.DataFrame:
 
 
 def _briefing_starts(df: pd.DataFrame) -> list[tuple[str, float]]:
-    """Return (form, scenario_time) for each experimental briefing, in order, deduped."""
+    """Return (form, scenario_time) for each experimental briefing, in order.
+
+    Real logs fire both an `event` and a `parameter` row per briefing (a few ms
+    apart); we key off the `event` row and keep the first occurrence per form.
+    """
     mask = (
         (df["module"] == "instructions")
         & (df["address"] == "filename")
+        & (df["type"] == "event")
         & (df["value"].astype(str).str.contains("briefing_F"))
     )
-    seen: dict[str, float] = {}
+    seen: set[str] = set()
     out: list[tuple[str, float]] = []
     for _, row in df[mask].sort_values("scenario_time").iterrows():
         m = _BRIEFING_RE.search(str(row["value"]))
         if not m:
             continue
-        key = f"{m.group(1)}@{row['scenario_time']}"
-        if key in seen:
+        form = m.group(1)
+        if form in seen:
             continue
-        seen[key] = row["scenario_time"]
-        out.append((m.group(1), float(row["scenario_time"])))
+        seen.add(form)
+        out.append((form, float(row["scenario_time"])))
     return out
 
 
