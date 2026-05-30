@@ -39,6 +39,11 @@ uv run pytest -q
   Cegarra et al. (2020); Santiago-Espada et al. (2011); Comstock & Arnegard (1992).
 - **Comms:** response accuracy (hits ÷ signal trials) and response time on hits
   (ms), in a signal-detection framing. Cegarra et al. (2020).
+- **Sysmon (H3):** detection rate + reaction time on aid-skipped events, and
+  overwrite rate + false alarms on aid-handled events (aid vs. user separated via
+  the `automaticsolver` state). Comstock & Arnegard (1992); Santiago-Espada et al.
+  (2011); SAT/agent-transparency framing from Chen et al. (2014), Mercado et al.
+  (2016), Stowers et al. (2017).
 
 ## Adding data
 
@@ -74,10 +79,12 @@ mislabelled or aborted session is flagged rather than silently analysed.
   - `parsing.py` — load CSV logs, segment into blocks
   - `metrics_resman.py` — resource-management metrics
   - `metrics_comms.py` — communications metrics
+  - `metrics_sysmon.py` — system-monitoring metrics (H3: detection, overwrites)
   - `aggregate.py` — assemble the tidy per-block table
   - `validation.py` — cross-check each session against the study design
   - `study_design.py` — embedded Latin-square orders and gauge→block map
-- `notebooks/01_resman_comms_performance.ipynb` — the analysis notebook
+- `notebooks/01_resman_comms_performance.ipynb` — H4: non-automated task performance
+- `notebooks/02_sysmon_detection_overwrite.ipynb` — H3: miss detection & aid overwrites
 - `session_logs/` — curated input logs (only these are analysed)
 - `tests/` — pytest unit + integration tests
 - `outputs/` — generated CSVs and figures (gitignored)

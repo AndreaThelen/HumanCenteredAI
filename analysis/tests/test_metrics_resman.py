@@ -93,5 +93,30 @@ def test_build_metrics_table_empty_has_columns_and_no_rows():
     table = build_metrics_table([])
     assert len(table) == 0
     assert list(table.columns[:4]) == ["participant", "form", "block", "session_file"]
-    for col in ["rmsd_mean", "pct_in_tolerance_mean", "accuracy", "mean_rt_hit"]:
+    for col in ["rmsd_mean", "pct_in_tolerance_mean", "accuracy", "mean_rt_hit",
+                "detection_rate", "overwrite_rate", "n_false_alarms"]:
         assert col in table.columns
+
+
+def test_build_metrics_table_computes_sysmon_detection(tmp_path):
+    header = "logtime,scenario_time,type,module,address,value\n"
+    rows = [
+        "1,0,scenario_path,,,includes/scenarios/study/full_P01.txt",
+        "2,1,parameter,sysmon,automaticsolverdelay,1000",
+        "3,10,event,instructions,filename,study/briefing_F1.txt",
+        "4,11,event,instructions,filename,study/panels/F1/block_A_event_01.txt",
+        # aid OFF, then the user catches the miss (HIT, rt 3000)
+        "5,12,event,sysmon,automaticsolver,0",
+        "6,15,performance,sysmon,name,F1",
+        "7,15,performance,sysmon,signal_detection,HIT",
+        "8,15,performance,sysmon,response_time,3000",
+    ]
+    csv = tmp_path / "s.csv"
+    csv.write_text(header + "\n".join(rows) + "\n", encoding="utf-8")
+    info = SessionInfo(path=csv, participant="P01",
+                       scenario_path="includes/scenarios/study/full_P01.txt",
+                       scenario_kind="full")
+    row = build_metrics_table([info]).iloc[0]
+    assert row["n_aid_miss_events"] == 1
+    assert row["n_detected"] == 1
+    assert row["detection_rate"] == 1.0
