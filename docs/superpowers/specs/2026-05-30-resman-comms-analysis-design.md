@@ -129,7 +129,10 @@ Per block, from `performance` rows grouped by event (one event = the set of
 - `n_hit`, `n_miss`, `n_fa`, plus error subtypes (`BAD_RADIO`, `BAD_FREQ`,
   `BAD_RADIO_FREQ`).
 - `accuracy` = hits / signal trials; `miss_rate`; `fa_count`.
-- `mean_rt_hit` — mean `response_time` on hits.
+- `mean_rt_hit` — mean `response_time` (milliseconds) on **hits only** (correct
+  radio + correct frequency). This is the latency from end-of-spoken-call to the
+  validated response; misses are `nan` and excluded. Speed metric, reported
+  alongside accuracy (Cegarra 2020: "response accuracy and response time").
 - `mean_abs_freq_dev` — mean |`response_deviation`| on responded trials.
 
 ### aggregate.py
