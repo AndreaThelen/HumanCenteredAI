@@ -1,0 +1,17 @@
+[project]
+name = "matb-analysis"
+version = "0.1.0"
+description = "OpenMATB resman & communications performance analysis (F1/F2/F3, H4)"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=2.2",
+    "numpy>=2.0",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "jupyterlab>=4.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
