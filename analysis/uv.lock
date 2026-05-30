@@ -1025,6 +1025,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "nbformat" },
     { name = "pytest" },
 ]
 
@@ -1038,7 +1039,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.0" }]
+dev = [
+    { name = "nbformat", specifier = ">=5.10.4" },
+    { name = "pytest", specifier = ">=8.0" },
+]
 
 [[package]]
 name = "matplotlib"
