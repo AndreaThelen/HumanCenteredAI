@@ -46,3 +46,47 @@ def test_rows_for_block_selects_by_scenario_time():
 def test_block_is_a_dataclass_with_expected_fields():
     b = Block(form="F1", block_letter="A", start_time=0.0, end_time=1.0)
     assert (b.form, b.block_letter, b.start_time, b.end_time) == ("F1", "A", 0.0, 1.0)
+
+
+# --- discovery tests (appended) ---
+from pathlib import Path
+from matb_analysis.discovery import scenario_kind_and_participant, find_study_sessions
+
+def test_scenario_kind_full_participant():
+    kind, pid, form, block = scenario_kind_and_participant(
+        "includes\\scenarios\\study\\full_P03.txt")
+    assert (kind, pid) == ("full", "P03")
+    assert form is None and block is None
+
+def test_scenario_kind_single_block():
+    kind, pid, form, block = scenario_kind_and_participant(
+        "includes/scenarios/study/F2_block_A.txt")
+    assert kind == "single_block"
+    assert (form, block) == ("F2", "A")
+
+def test_scenario_kind_non_study():
+    kind, pid, form, block = scenario_kind_and_participant(
+        "includes/scenarios/default_en.txt")
+    assert kind == "other"
+
+def test_find_study_sessions_filters_and_reads(tmp_path):
+    # Build a fake sessions tree with one study session and one non-study session.
+    day = tmp_path / "2026-01-01"
+    day.mkdir()
+    header = "logtime,scenario_time,type,module,address,value\n"
+    study = day / "1_x.csv"
+    study.write_text(
+        header
+        + "1,0,scenario_path,,,includes/scenarios/study/full_P01.txt\n"
+        + "2,1,event,instructions,filename,study/briefing_F1.txt\n",
+        encoding="utf-8",
+    )
+    other = day / "2_x.csv"
+    other.write_text(
+        header + "1,0,scenario_path,,,includes/scenarios/default_en.txt\n",
+        encoding="utf-8",
+    )
+    sessions = find_study_sessions(tmp_path)
+    assert len(sessions) == 1
+    assert sessions[0].participant == "P01"
+    assert sessions[0].scenario_kind == "full"
