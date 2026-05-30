@@ -11,6 +11,13 @@ from .metrics_comms import comms_metrics
 _KEY_COLS = ["participant", "form", "block", "session_file"]
 
 
+def _metric_columns() -> list[str]:
+    """Full metric column set, derived from the metric functions on an empty frame."""
+    empty = pd.DataFrame(columns=["logtime", "scenario_time", "type",
+                                  "module", "address", "value"])
+    return list(resman_metrics(empty).keys()) + list(comms_metrics(empty).keys())
+
+
 def build_metrics_table(sessions: list[SessionInfo] | None = None) -> pd.DataFrame:
     """Compute resman + comms metrics for every block of every session.
 
@@ -37,8 +44,11 @@ def build_metrics_table(sessions: list[SessionInfo] | None = None) -> pd.DataFra
             record.update(comms_metrics(block_rows))
             records.append(record)
 
+    if not records:
+        # No sessions / blocks: return an empty frame that still has every column,
+        # so downstream grouping and plotting code does not crash.
+        return pd.DataFrame(columns=_KEY_COLS + _metric_columns())
+
     table = pd.DataFrame(records)
-    if not table.empty:
-        ordered = _KEY_COLS + [c for c in table.columns if c not in _KEY_COLS]
-        table = table[ordered]
-    return table
+    ordered = _KEY_COLS + [c for c in table.columns if c not in _KEY_COLS]
+    return table[ordered]

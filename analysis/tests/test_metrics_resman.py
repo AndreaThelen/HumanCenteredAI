@@ -68,3 +68,12 @@ def test_build_metrics_table_one_full_session(tmp_path):
     assert f1["block"] == "A"
     assert f1["n_hit"] == 1
     assert f1["rmsd_a"] == 100.0
+
+def test_build_metrics_table_empty_has_columns_and_no_rows():
+    """No sessions -> empty frame that still exposes every column (so the
+    notebook's grouping/plotting cells don't crash before any data exists)."""
+    table = build_metrics_table([])
+    assert len(table) == 0
+    assert list(table.columns[:4]) == ["participant", "form", "block", "session_file"]
+    for col in ["rmsd_mean", "pct_in_tolerance_mean", "accuracy", "mean_rt_hit"]:
+        assert col in table.columns

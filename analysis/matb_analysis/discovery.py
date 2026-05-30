@@ -7,10 +7,11 @@ from pathlib import Path
 
 import pandas as pd
 
-# Default location of OpenMATB session logs, relative to the repo root.
-# discovery.py -> matb_analysis -> analysis -> repo root
-_REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_SESSIONS_DIR = _REPO_ROOT / "OpenMATB" / "sessions"
+# Dedicated, curated session-logs folder for this analysis. Only logs placed here
+# are analysed. Copy the relevant OpenMATB session CSVs into it.
+# discovery.py -> matb_analysis -> analysis
+_ANALYSIS_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_SESSIONS_DIR = _ANALYSIS_ROOT / "session_logs"
 
 _FULL_RE = re.compile(r"full_(P\d+)")
 _SINGLE_RE = re.compile(r"(F\d)_block_([A-C])")
@@ -54,10 +55,16 @@ def _read_scenario_path(csv_path: Path) -> str | None:
 
 
 def find_study_sessions(sessions_dir: str | Path = DEFAULT_SESSIONS_DIR) -> list[SessionInfo]:
-    """Return SessionInfo for every non-trivial study session under sessions_dir."""
+    """Return SessionInfo for every non-trivial study session under sessions_dir.
+
+    Searches recursively, so logs may sit directly in the folder or inside the
+    OpenMATB date subfolders (e.g. ``2026-05-30/19_*.csv``).
+    """
     sessions_dir = Path(sessions_dir)
+    if not sessions_dir.exists():
+        return []
     out: list[SessionInfo] = []
-    for csv_path in sorted(sessions_dir.glob("*/*.csv")):
+    for csv_path in sorted(sessions_dir.rglob("*.csv")):
         # Skip tiny / aborted files quickly.
         try:
             n_lines = sum(1 for _ in csv_path.open(encoding="utf-8", errors="ignore"))
