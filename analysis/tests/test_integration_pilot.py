@@ -1,9 +1,11 @@
 """Smoke test against the real pilot logs (skips cleanly if none are present)."""
-import math
 import pytest
 
 from matb_analysis.discovery import find_study_sessions
 from matb_analysis.aggregate import build_metrics_table
+from matb_analysis.parsing import load_raw
+from matb_analysis.validation import validate_session, validate_sessions
+from matb_analysis.study_design import PARTICIPANT_ORDERS
 
 
 def test_pilot_sessions_discovered():
@@ -13,17 +15,27 @@ def test_pilot_sessions_discovered():
     assert all(s.scenario_kind in {"full", "single_block"} for s in sessions)
 
 
-def test_full_session_has_three_blocks_in_order():
+def test_biggest_full_session_matches_its_latin_square():
     sessions = [s for s in find_study_sessions() if s.scenario_kind == "full"]
     if not sessions:
         pytest.skip("no full_PXX pilot sessions present")
-    table = build_metrics_table(sessions)
-    # Pick the largest full session (most complete run).
+    # Pick the largest full session (most complete run) and validate it against
+    # that participant's own Latin-square order -- not a hard-coded sequence.
     biggest = max(sessions, key=lambda s: s.path.stat().st_size)
-    sub = table[table.session_file == biggest.path.name]
-    assert len(sub) == 3, f"expected 3 blocks, got {len(sub)}"
-    assert list(sub["form"]) == ["F1", "F2", "F3"]
-    assert list(sub["block"]) == ["A", "B", "C"]  # P01 order
+    v = validate_session(load_raw(biggest.path), biggest)
+    assert v.ok, v.issues
+    expected = PARTICIPANT_ORDERS[biggest.participant]
+    assert v.realized == expected[:len(v.realized)]
+    assert all(letter for _, letter in v.realized)  # every block letter resolved
+
+
+def test_all_discovered_sessions_validate():
+    sessions = find_study_sessions()
+    if not sessions:
+        pytest.skip("no sessions present")
+    report = validate_sessions(sessions)
+    bad = report[~report["ok"]]
+    assert bad.empty, "sessions with validation issues:\n" + bad.to_string(index=False)
 
 
 def test_metrics_table_columns_present():

@@ -69,6 +69,24 @@ def test_build_metrics_table_one_full_session(tmp_path):
     assert f1["n_hit"] == 1
     assert f1["rmsd_a"] == 100.0
 
+def test_build_metrics_table_recovers_block_letter_from_gauges(tmp_path):
+    header = "logtime,scenario_time,type,module,address,value\n"
+    rows = [
+        "1,0,scenario_path,,,includes/scenarios/study/full_P01.txt",
+        "2,10,event,instructions,filename,study/briefing_F1.txt",
+        # no panel row; the failing gauges (scales-1 + scales-3) identify block A
+        "3,12,event,sysmon,scales-1-failure,1",
+        "4,13,event,sysmon,scales-3-failure,1",
+        "5,14,performance,resman,a_deviation,100",
+    ]
+    csv = tmp_path / "s.csv"
+    csv.write_text(header + "\n".join(rows) + "\n", encoding="utf-8")
+    info = SessionInfo(path=csv, participant="P01",
+                       scenario_path="includes/scenarios/study/full_P01.txt",
+                       scenario_kind="full")
+    table = build_metrics_table([info])
+    assert table.iloc[0]["block"] == "A"   # recovered from gauges despite no panel
+
 def test_build_metrics_table_empty_has_columns_and_no_rows():
     """No sessions -> empty frame that still exposes every column (so the
     notebook's grouping/plotting cells don't crash before any data exists)."""

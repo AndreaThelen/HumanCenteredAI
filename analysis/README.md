@@ -56,6 +56,17 @@ blocks (F1/F2/F3 × A/B/C), and computes one tidy row of metrics per
 (participant, form, block). It runs unchanged as more participant data (P01–P10)
 is collected.
 
+Everything is read from the logs themselves — the participant from the
+`scenario_path` row, the form of each block from its briefing event, and the
+block/gauge set from the panel paths (with the failed sysmon gauges as an
+independent fallback). The scenario `.txt` files are never opened.
+
+**Validation.** `validate_sessions()` cross-checks each session: briefing form vs.
+panel form, panel block vs. the gauges that actually failed, and the realised
+(form, block) order vs. the participant's Latin-square row (embedded in
+`study_design.py`). The notebook surfaces this as a per-session ✅/❌ report so a
+mislabelled or aborted session is flagged rather than silently analysed.
+
 ## Layout
 
 - `matb_analysis/` — importable, tested package:
@@ -64,6 +75,8 @@ is collected.
   - `metrics_resman.py` — resource-management metrics
   - `metrics_comms.py` — communications metrics
   - `aggregate.py` — assemble the tidy per-block table
+  - `validation.py` — cross-check each session against the study design
+  - `study_design.py` — embedded Latin-square orders and gauge→block map
 - `notebooks/01_resman_comms_performance.ipynb` — the analysis notebook
 - `session_logs/` — curated input logs (only these are analysed)
 - `tests/` — pytest unit + integration tests

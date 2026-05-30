@@ -7,11 +7,16 @@ from pathlib import Path
 
 import pandas as pd
 
+from .study_design import GAUGE_TO_BLOCK
+
 COLUMNS = ["logtime", "scenario_time", "type", "module", "address", "value"]
+_TRUE_VALUES = {"1", "True", "true"}
 
 _BRIEFING_RE = re.compile(r"briefing_(F\d)\.txt")
 _PANEL_RE = re.compile(r"panels/F\d/block_([A-C])_")
+_PANEL_FB_RE = re.compile(r"panels/(F\d)/block_([A-C])_")  # captures (form, block)
 _MENTAL_RE = re.compile(r"mental_model_block_([A-C])")
+_FAILURE_RE = re.compile(r"^(.*)-failure$")
 
 
 @dataclass
@@ -104,3 +109,33 @@ def rows_for_block(df: pd.DataFrame, block: Block) -> pd.DataFrame:
     """Return the rows whose scenario_time falls inside the block interval."""
     mask = (df["scenario_time"] >= block.start_time) & (df["scenario_time"] < block.end_time)
     return df[mask].copy()
+
+
+def panel_forms_blocks(block_rows: pd.DataFrame) -> set[tuple[str, str]]:
+    """Distinct (form, block_letter) pairs named by panel paths in a block window.
+
+    A correctly-built block fires panels for one form/block only, so this set
+    should have at most one element. More than one signals a labelling problem.
+    """
+    values = block_rows["value"].dropna().astype(str)
+    return {(m.group(1), m.group(2)) for v in values if (m := _PANEL_FB_RE.search(v))}
+
+
+def block_letter_from_gauges(block_rows: pd.DataFrame) -> str:
+    """Independently derive the block letter from which sysmon gauges failed.
+
+    Each block uses a fixed pair of gauges (see ``GAUGE_BY_BLOCK``). Returns the
+    single agreed letter, or "" if there are no failures or they conflict.
+    """
+    failures = block_rows[
+        (block_rows["module"] == "sysmon")
+        & (block_rows["type"] == "event")
+        & (block_rows["address"].astype(str).str.endswith("-failure"))
+        & (block_rows["value"].astype(str).isin(_TRUE_VALUES))
+    ]
+    letters = set()
+    for addr in failures["address"].astype(str):
+        m = _FAILURE_RE.match(addr)
+        if m and m.group(1) in GAUGE_TO_BLOCK:
+            letters.add(GAUGE_TO_BLOCK[m.group(1)])
+    return letters.pop() if len(letters) == 1 else ""

@@ -1,5 +1,36 @@
 import pandas as pd
-from matb_analysis.parsing import load_raw, segment_blocks, rows_for_block, Block
+from matb_analysis.parsing import (load_raw, segment_blocks, rows_for_block, Block,
+                                   block_letter_from_gauges)
+
+COLS = ["logtime", "scenario_time", "type", "module", "address", "value"]
+
+
+def _sysmon(triples):
+    return pd.DataFrame(
+        [(0.0, float(i), typ, "sysmon", addr, val) for i, (typ, addr, val) in enumerate(triples)],
+        columns=COLS,
+    )
+
+
+def test_block_letter_from_gauges_identifies_block():
+    # scales-1 + scales-3 failing -> block A
+    rows = _sysmon([("event", "scales-1-failure", "1"),
+                    ("event", "scales-3-failure", "1")])
+    assert block_letter_from_gauges(rows) == "A"
+
+
+def test_block_letter_from_gauges_ignores_param_init_zeros():
+    # parameter init rows (value 0) and a real lights failure -> block B
+    rows = _sysmon([("parameter", "lights-1-failure", "0"),
+                    ("event", "lights-2-failure", "1")])
+    assert block_letter_from_gauges(rows) == "B"
+
+
+def test_block_letter_from_gauges_blank_when_none_or_conflicting():
+    assert block_letter_from_gauges(_sysmon([])) == ""
+    conflicting = _sysmon([("event", "scales-1-failure", "1"),   # A
+                           ("event", "scales-2-failure", "1")])  # C
+    assert block_letter_from_gauges(conflicting) == ""
 
 # A minimal synthetic log: practice block, then F1/block_A, then F2/block_B.
 # Columns: logtime, scenario_time, type, module, address, value

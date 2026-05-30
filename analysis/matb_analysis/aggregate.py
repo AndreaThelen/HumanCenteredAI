@@ -4,7 +4,7 @@ from __future__ import annotations
 import pandas as pd
 
 from .discovery import SessionInfo, find_study_sessions
-from .parsing import load_raw, rows_for_block, segment_blocks
+from .parsing import block_letter_from_gauges, load_raw, rows_for_block, segment_blocks
 from .metrics_resman import resman_metrics
 from .metrics_comms import comms_metrics
 
@@ -32,8 +32,11 @@ def build_metrics_table(sessions: list[SessionInfo] | None = None) -> pd.DataFra
         df = load_raw(info.path)
         for block in segment_blocks(df):
             block_rows = rows_for_block(df, block)
-            # single-block sessions: trust the scenario-derived form/block if detection blank
-            block_letter = block.block_letter or (info.block or "")
+            # Resolve the block letter: panel (primary) -> failed-gauge fallback ->
+            # scenario-derived hint for single-block sessions.
+            block_letter = (block.block_letter
+                            or block_letter_from_gauges(block_rows)
+                            or (info.block or ""))
             record = {
                 "participant": info.participant,
                 "form": block.form,
