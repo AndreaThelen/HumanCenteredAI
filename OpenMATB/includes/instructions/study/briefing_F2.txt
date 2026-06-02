@@ -1,8 +1,8 @@
-<h1>This block: Form 2 - Selective + contrastive panel</h1>
+<h1>This block: Form 2 - Contrastive panel</h1>
 
 <p>For the next ~5 minutes the system-monitoring task is supported by an <strong>automation aid</strong> that detects out-of-range indicators and corrects most of them for you. The aid is <strong>not perfect</strong>: on some events it will not act, and you must then respond yourself by pressing the appropriate F-key.</p>
 
-<p><strong>Information panel.</strong> A panel appears <strong>only when something noteworthy happens</strong> - a near-miss the aid just averted, or an event it did NOT handle. Routine, uneventful auto-resets produce no panel. The wording is contrastive ("would have failed in ~X s"; "skipped scale-N - auto-aid did not act"), so you can see at a glance what the aid did or did not do.</p>
+<p><strong>Information panel.</strong> A panel appears on <strong>every</strong> automation cycle, worded <strong>concisely and contrastively</strong> ("Reset scale-N - would have failed in ~X s"; "Skipped scale-N - auto-aid did not act"), so you can see at a glance what the aid did or did not do on that event.</p>
 
 <p>While a panel is on screen the MATB tasks <strong>pause</strong>; press SPACE to dismiss the panel and resume.</p>
 

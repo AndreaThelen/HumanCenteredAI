@@ -1,6 +1,5 @@
-MM_A_set_scale1;Did the automation reset Scale 1 at any point during this block?;No/Yes;0/1/0
-MM_A_set_scale2;Did the automation reset Scale 2 at any point during this block?;No/Yes;0/1/0
-MM_A_set_scale3;Did the automation reset Scale 3 at any point during this block?;No/Yes;0/1/0
-MM_A_set_scale4;Did the automation reset Scale 4 at any point during this block?;No/Yes;0/1/0
-MM_A_q_skipped;On how many occasions did the automation FAIL to act on an indicator that was out of range during this block?;0 times/9 times;0/9/0
-MM_A_q_reliability;Of all the out-of-range events this block, what percentage did the automation handle correctly? (Please move the slider, the start value is uninformative.);0%/100%;0/100/50
+MM_A_q_misses;Over this block, how often did the automation FAIL to act on an indicator that needed attention? (move the slider);Never/On most events;0/9/4
+MM_A_q_closecalls;How often did the automation step in only just in time - a close call? (move the slider);Never/On most events;0/9/4
+MM_A_q_reliability;Overall, how reliable was the automation this block? (move the slider, the start value is uninformative);Not at all reliable/Completely reliable;0/100/50
+MM_A_rec_scale1;Did the automation act on Scale 1 at any point during this block?;No/Yes;0/100/50
+MM_A_rec_scale3;Did the automation act on Scale 3 at any point during this block?;No/Yes;0/100/50

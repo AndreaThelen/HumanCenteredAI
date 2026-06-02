@@ -1,0 +1,2 @@
+<p><strong>Auto-aid panel</strong></p>
+<p>Handled light-2 - aid kept it cleared.</p>

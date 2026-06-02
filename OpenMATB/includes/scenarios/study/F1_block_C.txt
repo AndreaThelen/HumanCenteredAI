@@ -1,5 +1,6 @@
 # Study scenario - Form F1, Block C
-# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).
+# Information content held CONSTANT across forms (same events, same facts, same panel frequency);
+# vary ONLY the wording-form: F1 verbose / F2 contrastive / F3 contrastive + actionable cue on misses.
 # Block C uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.
 
 # 1. Briefing (form-specific)
@@ -100,10 +101,10 @@
 # 8. Post-block questionnaire battery
 0:05:01;instructions;filename;study/end_of_block.txt
 0:05:01;instructions;start
+0:05:01;genericscales;filename;study/mental_model_block_C.txt
+0:05:01;genericscales;start
 0:05:01;genericscales;filename;study/subjective_transparency.txt
 0:05:01;genericscales;start
-0:05:01;genericscales;filename;study/subjective_trust.txt
-0:05:01;genericscales;start
-0:05:01;genericscales;filename;study/mental_model_block_C.txt
+0:05:01;genericscales;filename;study/workload.txt
 0:05:01;genericscales;start
 

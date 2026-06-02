@@ -1,3 +1,2 @@
 <p><strong>Cycle 01 (auto-aid)</strong></p>
-<p>Light-1: went OFF for 1.0 s - re-enabled by auto-aid. Scale-1: 28.4, in range. Scale-2: 31.5, in range. Scale-3: 29.7, in range. Scale-4: 30.2, in range. Light-2: OFF (nominal).</p>
-
+<p>The green status light (light-1) switched off; the automation restored it.</p>

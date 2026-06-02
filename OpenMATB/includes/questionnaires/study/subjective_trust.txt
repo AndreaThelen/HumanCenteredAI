@@ -1,4 +1,0 @@
-Trust_01_reliable;The system is reliable.;Strongly disagree/Strongly agree;1/7/4
-Trust_02_expected;The system does what I expect.;Strongly disagree/Strongly agree;1/7/4
-Trust_03_confident;I feel confident when I use the system.;Strongly disagree/Strongly agree;1/7/4
-Trust_04_trust;I can trust the system.;Strongly disagree/Strongly agree;1/7/4

@@ -43,7 +43,8 @@
 
 # === Segment 2: F2_block_B (0:03:01 - 0:08:02) ===
 # Study scenario - Form F2, Block B
-# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).
+# Information content held CONSTANT across forms (same events, same facts, same panel frequency);
+# vary ONLY the wording-form: F1 verbose / F2 contrastive / F3 contrastive + actionable cue on misses.
 # Block B uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.
 
 # 1. Briefing (form-specific)
@@ -77,10 +78,14 @@
 # Event 01 at 0:00:30 : lights-1 (routine)
 0:03:30;sysmon;automaticsolver;True
 0:03:31;sysmon;lights-1-failure;True
+0:03:33;instructions;filename;study/panels/F2/block_B_event_01.txt
+0:03:33;instructions;start
 
 # Event 02 at 0:01:00 : lights-2 (routine)
 0:04:00;sysmon;automaticsolver;True
 0:04:01;sysmon;lights-2-failure;True
+0:04:03;instructions;filename;study/panels/F2/block_B_event_02.txt
+0:04:03;instructions;start
 
 # Event 03 at 0:01:30 : lights-1 (nearmiss)
 0:04:30;sysmon;automaticsolver;True
@@ -91,6 +96,8 @@
 # Event 04 at 0:02:00 : lights-2 (routine)
 0:05:00;sysmon;automaticsolver;True
 0:05:01;sysmon;lights-2-failure;True
+0:05:03;instructions;filename;study/panels/F2/block_B_event_04.txt
+0:05:03;instructions;start
 
 # Event 05 at 0:02:30 : lights-1 (miss)
 0:05:30;sysmon;automaticsolver;False
@@ -101,6 +108,8 @@
 # Event 06 at 0:03:00 : lights-2 (routine)
 0:06:00;sysmon;automaticsolver;True
 0:06:01;sysmon;lights-2-failure;True
+0:06:03;instructions;filename;study/panels/F2/block_B_event_06.txt
+0:06:03;instructions;start
 
 # Event 07 at 0:03:30 : lights-2 (nearmiss)
 0:06:30;sysmon;automaticsolver;True
@@ -117,20 +126,23 @@
 # Event 09 at 0:04:30 : lights-2 (routine)
 0:07:30;sysmon;automaticsolver;True
 0:07:31;sysmon;lights-2-failure;True
+0:07:33;instructions;filename;study/panels/F2/block_B_event_09.txt
+0:07:33;instructions;start
 
 # 8. Post-block questionnaire battery
 0:08:02;instructions;filename;study/end_of_block.txt
 0:08:02;instructions;start
+0:08:02;genericscales;filename;study/mental_model_block_B.txt
+0:08:02;genericscales;start
 0:08:02;genericscales;filename;study/subjective_transparency.txt
 0:08:02;genericscales;start
-0:08:02;genericscales;filename;study/subjective_trust.txt
-0:08:02;genericscales;start
-0:08:02;genericscales;filename;study/mental_model_block_B.txt
+0:08:02;genericscales;filename;study/workload.txt
 0:08:02;genericscales;start
 
 # === Segment 3: F3_block_C (0:08:03 - 0:13:04) ===
 # Study scenario - Form F3, Block C
-# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).
+# Information content held CONSTANT across forms (same events, same facts, same panel frequency);
+# vary ONLY the wording-form: F1 verbose / F2 contrastive / F3 contrastive + actionable cue on misses.
 # Block C uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.
 
 # 1. Briefing (form-specific)
@@ -164,10 +176,14 @@
 # Event 01 at 0:00:30 : scales-2 (routine)
 0:08:32;sysmon;automaticsolver;True
 0:08:33;sysmon;scales-2-failure;True
+0:08:35;instructions;filename;study/panels/F3/block_C_event_01.txt
+0:08:35;instructions;start
 
 # Event 02 at 0:01:00 : scales-4 (routine)
 0:09:02;sysmon;automaticsolver;True
 0:09:03;sysmon;scales-4-failure;True
+0:09:05;instructions;filename;study/panels/F3/block_C_event_02.txt
+0:09:05;instructions;start
 
 # Event 03 at 0:01:30 : scales-2 (nearmiss)
 0:09:32;sysmon;automaticsolver;True
@@ -178,6 +194,8 @@
 # Event 04 at 0:02:00 : scales-4 (routine)
 0:10:02;sysmon;automaticsolver;True
 0:10:03;sysmon;scales-4-failure;True
+0:10:05;instructions;filename;study/panels/F3/block_C_event_04.txt
+0:10:05;instructions;start
 
 # Event 05 at 0:02:30 : scales-2 (miss)
 0:10:32;sysmon;automaticsolver;False
@@ -188,6 +206,8 @@
 # Event 06 at 0:03:00 : scales-4 (routine)
 0:11:02;sysmon;automaticsolver;True
 0:11:03;sysmon;scales-4-failure;True
+0:11:05;instructions;filename;study/panels/F3/block_C_event_06.txt
+0:11:05;instructions;start
 
 # Event 07 at 0:03:30 : scales-4 (nearmiss)
 0:11:32;sysmon;automaticsolver;True
@@ -204,20 +224,23 @@
 # Event 09 at 0:04:30 : scales-4 (routine)
 0:12:32;sysmon;automaticsolver;True
 0:12:33;sysmon;scales-4-failure;True
+0:12:35;instructions;filename;study/panels/F3/block_C_event_09.txt
+0:12:35;instructions;start
 
 # 8. Post-block questionnaire battery
 0:13:04;instructions;filename;study/end_of_block.txt
 0:13:04;instructions;start
+0:13:04;genericscales;filename;study/mental_model_block_C.txt
+0:13:04;genericscales;start
 0:13:04;genericscales;filename;study/subjective_transparency.txt
 0:13:04;genericscales;start
-0:13:04;genericscales;filename;study/subjective_trust.txt
-0:13:04;genericscales;start
-0:13:04;genericscales;filename;study/mental_model_block_C.txt
+0:13:04;genericscales;filename;study/workload.txt
 0:13:04;genericscales;start
 
 # === Segment 4: F1_block_A (0:13:05 - 0:18:06) ===
 # Study scenario - Form F1, Block A
-# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).
+# Information content held CONSTANT across forms (same events, same facts, same panel frequency);
+# vary ONLY the wording-form: F1 verbose / F2 contrastive / F3 contrastive + actionable cue on misses.
 # Block A uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.
 
 # 1. Briefing (form-specific)
@@ -305,11 +328,11 @@
 # 8. Post-block questionnaire battery
 0:18:06;instructions;filename;study/end_of_block.txt
 0:18:06;instructions;start
+0:18:06;genericscales;filename;study/mental_model_block_A.txt
+0:18:06;genericscales;start
 0:18:06;genericscales;filename;study/subjective_transparency.txt
 0:18:06;genericscales;start
-0:18:06;genericscales;filename;study/subjective_trust.txt
-0:18:06;genericscales;start
-0:18:06;genericscales;filename;study/mental_model_block_A.txt
+0:18:06;genericscales;filename;study/workload.txt
 0:18:06;genericscales;start
 
 # === End of experiments: stop the four MATB tasks ===

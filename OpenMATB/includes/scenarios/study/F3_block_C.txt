@@ -1,5 +1,6 @@
 # Study scenario - Form F3, Block C
-# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).
+# Information content held CONSTANT across forms (same events, same facts, same panel frequency);
+# vary ONLY the wording-form: F1 verbose / F2 contrastive / F3 contrastive + actionable cue on misses.
 # Block C uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.
 
 # 1. Briefing (form-specific)
@@ -40,10 +41,14 @@
 # Event 01 at 0:00:30 : scales-2 (routine)
 0:00:29;sysmon;automaticsolver;True
 0:00:30;sysmon;scales-2-failure;True
+0:00:32;instructions;filename;study/panels/F3/block_C_event_01.txt
+0:00:32;instructions;start
 
 # Event 02 at 0:01:00 : scales-4 (routine)
 0:00:59;sysmon;automaticsolver;True
 0:01:00;sysmon;scales-4-failure;True
+0:01:02;instructions;filename;study/panels/F3/block_C_event_02.txt
+0:01:02;instructions;start
 
 # Event 03 at 0:01:30 : scales-2 (nearmiss)
 0:01:29;sysmon;automaticsolver;True
@@ -54,6 +59,8 @@
 # Event 04 at 0:02:00 : scales-4 (routine)
 0:01:59;sysmon;automaticsolver;True
 0:02:00;sysmon;scales-4-failure;True
+0:02:02;instructions;filename;study/panels/F3/block_C_event_04.txt
+0:02:02;instructions;start
 
 # Event 05 at 0:02:30 : scales-2 (miss)
 0:02:29;sysmon;automaticsolver;False
@@ -64,6 +71,8 @@
 # Event 06 at 0:03:00 : scales-4 (routine)
 0:02:59;sysmon;automaticsolver;True
 0:03:00;sysmon;scales-4-failure;True
+0:03:02;instructions;filename;study/panels/F3/block_C_event_06.txt
+0:03:02;instructions;start
 
 # Event 07 at 0:03:30 : scales-4 (nearmiss)
 0:03:29;sysmon;automaticsolver;True
@@ -80,6 +89,8 @@
 # Event 09 at 0:04:30 : scales-4 (routine)
 0:04:29;sysmon;automaticsolver;True
 0:04:30;sysmon;scales-4-failure;True
+0:04:32;instructions;filename;study/panels/F3/block_C_event_09.txt
+0:04:32;instructions;start
 
 # 7. End of experimental block - stop tasks
 0:05:00;sysmon;stop
@@ -90,10 +101,10 @@
 # 8. Post-block questionnaire battery
 0:05:01;instructions;filename;study/end_of_block.txt
 0:05:01;instructions;start
+0:05:01;genericscales;filename;study/mental_model_block_C.txt
+0:05:01;genericscales;start
 0:05:01;genericscales;filename;study/subjective_transparency.txt
 0:05:01;genericscales;start
-0:05:01;genericscales;filename;study/subjective_trust.txt
-0:05:01;genericscales;start
-0:05:01;genericscales;filename;study/mental_model_block_C.txt
+0:05:01;genericscales;filename;study/workload.txt
 0:05:01;genericscales;start
 

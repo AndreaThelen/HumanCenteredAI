@@ -1,3 +1,2 @@
 <p><strong>Auto-aid panel</strong></p>
 <p>Skipped scale-2 - auto-aid did not act. <strong>Check it yourself.</strong></p>
-

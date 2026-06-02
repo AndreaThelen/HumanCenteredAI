@@ -1,3 +1,3 @@
 Subjective_transparency_what;The system told me what it was doing.;Strongly disagree/Strongly agree;1/7/4
-Subjective_attention_guidance;The system made it clear which indicator I should attend to next.;Strongly disagree/Strongly agree;1/7/4
-Subjective_information_volume;The amount of information the system gave me felt about right.;Far too little/Far too much;1/7/4
+Subjective_keep_track_REV;It was hard to keep track of what the automation was doing.;Strongly disagree/Strongly agree;1/7/4
+Subjective_information_volume;The amount of information the system gave me felt about right.;Strongly disagree/Strongly agree;1/7/4

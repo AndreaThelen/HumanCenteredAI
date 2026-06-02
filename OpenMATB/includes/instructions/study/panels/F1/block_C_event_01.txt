@@ -1,3 +1,2 @@
 <p><strong>Cycle 01 (auto-aid)</strong></p>
-<p>Scale-2: was 47.3 > upper bound 45.0 for 1.0 s - reset to 32.0. Scale-1: 28.4, in range. Scale-3: 29.7, in range. Scale-4: 30.2, in range. Lights: OK.</p>
-
+<p>Scale-2 rose to 46.4, above the upper bound of 45.0; the automation reset it to 32.0 and it is back in range.</p>

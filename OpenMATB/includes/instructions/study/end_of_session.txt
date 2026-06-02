@@ -2,4 +2,6 @@
 
 <p>You have completed all three experimental blocks. A final short questionnaire will now ask you to compare the three forms of information panel.</p>
 
+<p>For each question, move the slider toward the form you prefer: <strong>far left = Form 1</strong> (verbose), <strong>middle = Form 2</strong> (concise), <strong>far right = Form 3</strong> (concise + cue).</p>
+
 <p>Press SPACE to continue.</p>

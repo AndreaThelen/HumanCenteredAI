@@ -99,10 +99,121 @@ def block_event_gauge(block_letter, event_idx):
 
 
 def panel_fires(form, event_idx):
-    """F1 panels fire on every event; F2/F3 only on events 3, 5, 7, 8."""
+    """Revised design (Documents/Study_design_revised.md): information content is held
+    CONSTANT across forms, so a panel fires on EVERY event in EVERY form. The forms differ
+    only in wording (F1 verbose / F2 contrastive / F3 contrastive + actionable cue on
+    misses). Frequency is no longer a manipulated variable."""
+    return True
+
+
+# --- Panel content (single source of truth for F1/F2/F3) ------------------
+# Content-constant rule (Documents/Study_design_revised.md): for each event the
+# action-relevant facts -- which indicator, that it was out of range/active, whether the
+# aid acted, and (for near-misses) the time-to-failure -- are IDENTICAL across F1/F2/F3.
+# F1 only adds grammatical scaffolding and redundant exact sensor values; it introduces no
+# new action-relevant fact. All three panels are rendered here from the same event facts so
+# they cannot drift apart.
+
+PANELS_DIR = OUT_DIR.parent.parent / "instructions" / "study" / "panels"
+
+
+def _val(i):
+    """Deterministic out-of-range scale value (above the 45.0 upper bound)."""
+    return round(46.0 + ((i * 7) % 6) * 0.4, 1)
+
+
+def _ttf(i):
+    """Deterministic near-miss time-to-failure in seconds (shared by F1 and F2)."""
+    return round(2.0 + ((i * 5) % 5) * 0.5, 1)
+
+
+def _dur(i):
+    """Deterministic out-of-range duration in seconds (verbose-only detail)."""
+    return round(0.5 + ((i * 3) % 5) * 0.4, 1)
+
+
+def indicator_parts(gauge):
+    """Return display attributes for a gauge name like 'scales-1' / 'lights-2'."""
+    family, num = gauge.split("-")
+    if family == "scales":
+        return {"type": "scale", "n": num, "name": f"scale-{num}",
+                "actverb": "Reset", "routine_state": "in range"}
+    # lights: light-1 is the green status light (failure = switches off, fix = restore),
+    # light-2 is the red warning light (failure = comes on, fix = clear).
+    if num == "1":
+        return {"type": "light", "n": num, "name": f"light-{num}",
+                "desc": "The green status light", "fail": "switched off",
+                "fixed": "restored", "fixv": "restore", "actverb": "Restored",
+                "routine_state": "nominal"}
+    return {"type": "light", "n": num, "name": f"light-{num}",
+            "desc": "The red warning light", "fail": "came on",
+            "fixed": "cleared", "fixv": "clear", "actverb": "Cleared",
+            "routine_state": "cleared"}
+
+
+def _wrap(head, body):
+    return f"<p><strong>{head}</strong></p>\n<p>{body}</p>\n"
+
+
+def panel_F1(i, kind, gauge):
+    """Verbose / descriptive narration of this event's facts (no other indicators)."""
+    p = indicator_parts(gauge)
+    if p["type"] == "scale":
+        v, n = _val(i), p["n"]
+        if kind == "R":
+            body = (f"Scale-{n} rose to {v}, above the upper bound of 45.0; "
+                    f"the automation reset it to 32.0 and it is back in range.")
+        elif kind == "NM":
+            body = (f"Scale-{n} rose to {v}, above the 45.0 bound, for {_dur(i)} s; "
+                    f"the automation reset it to 32.0. Without the reset it would have "
+                    f"failed in ~{_ttf(i)} s.")
+        else:
+            body = (f"Scale-{n} was {v}, above the upper bound of 45.0; "
+                    f"the automation did not act on this gauge.")
+    else:
+        n = p["n"]
+        if kind == "R":
+            body = f"{p['desc']} (light-{n}) {p['fail']}; the automation {p['fixed']} it."
+        elif kind == "NM":
+            body = (f"{p['desc']} (light-{n}) {p['fail']}; the automation {p['fixed']} it "
+                    f"just in time - it would have been missed in ~{_ttf(i)} s.")
+        else:
+            body = (f"{p['desc']} (light-{n}) {p['fail']}; "
+                    f"the automation did not {p['fixv']} it.")
+    return _wrap(f"Cycle {i:02d} (auto-aid)", body)
+
+
+def panel_F2(i, kind, gauge, actionable=False):
+    """Concise / contrastive framing of the SAME facts. F3 = actionable=True."""
+    p = indicator_parts(gauge)
+    if kind == "R":
+        body = f"Handled {p['name']} - aid kept it {p['routine_state']}."
+    elif kind == "NM":
+        body = f"{p['actverb']} {p['name']} - would have failed in ~{_ttf(i)} s."
+    else:
+        body = f"Skipped {p['name']} - auto-aid did not act."
+        if actionable:
+            body += " <strong>Check it yourself.</strong>"
+    return _wrap("Auto-aid panel", body)
+
+
+def render_panel(form, i, kind, gauge):
     if form == "F1":
-        return True
-    return event_idx in (3, 5, 7, 8)
+        return panel_F1(i, kind, gauge)
+    return panel_F2(i, kind, gauge, actionable=(form == "F3"))
+
+
+def write_panels():
+    """(Re)generate every F1/F2/F3 panel from the shared event facts."""
+    for form in ("F1", "F2", "F3"):
+        (PANELS_DIR / form).mkdir(parents=True, exist_ok=True)
+        for block_letter in ("A", "B", "C"):
+            for i, kind in enumerate(EVENT_PATTERN, start=1):
+                gauge = block_event_gauge(block_letter, i)
+                text = render_panel(form, i, kind, gauge)
+                path = PANELS_DIR / form / f"block_{block_letter}_event_{i:02d}.txt"
+                path.write_text(text, encoding="utf-8")
+    print(f"  wrote 81 panel files into {PANELS_DIR}")
 
 
 # --- Rendering blocks -----------------------------------------------------
@@ -194,20 +305,21 @@ def render_post_block_questionnaires(t0, block_letter):
     """Returns (lines, end_time_sec) where end_time is when the last item fires."""
     g = QUESTIONNAIRE_GAP_SEC
     out = ["# 8. Post-block questionnaire battery"]
-    # Order is subjective-first, objective-probe-last (see tmp/proposal2.md S5):
-    # the mental-model probe must not contaminate self-reported transparency/trust.
-    #   1. subjective_transparency (4 items, researcher-designed)
-    #   2. subjective_trust        (4 items, plain-English, non-native-friendly;
-    #                               adapted from Jian/Bisantz 2000, reverse-worded
-    #                               distrust items dropped for clarity)
-    #   3. mental_model_block_X    (objective probe, scored vs. ground truth)
+    # Revised lean battery (Documents/Study_design_revised.md). Per-block trust and the
+    # full NASA-TLX are dropped; trust is captured once in the end-of-session debrief.
+    # Order is PROBE-FIRST, then transparency, then workload last:
+    #   1. mental_model_block_X    (objective explicability probe; captured first to
+    #                               minimise memory decay/reconstruction -- H2)
+    #   2. subjective_transparency (3 items, the subjective half of the crossover -- H1)
+    #   3. workload                (single Paas-style item; rated last so effort-rating
+    #                               does not colour the earlier answers -- mechanism check)
     # genericscales renders every item on one screen and only logs the final page,
     # so each file is kept <=6 items (one blocking screen, logged on its own stop()).
     items = [
         ("instructions",  "study/end_of_block.txt"),
-        ("genericscales", "study/subjective_transparency.txt"),
-        ("genericscales", "study/subjective_trust.txt"),
         ("genericscales", f"study/mental_model_block_{block_letter}.txt"),
+        ("genericscales", "study/subjective_transparency.txt"),
+        ("genericscales", "study/workload.txt"),
     ]
     last_t = t0
     for i, (plugin, fname) in enumerate(items):
@@ -223,7 +335,8 @@ def render_block(form, block_letter, t0, include_task_lifecycle):
     lines = []
     lines += [
         f"# Study scenario - Form {form}, Block {block_letter}",
-        f"# Hold transparency content matched at SAT Level 2; vary form (selectivity, contrastiveness, actionability).",
+        f"# Information content held CONSTANT across forms (same events, same facts, same panel frequency);",
+        f"# vary ONLY the wording-form: F1 verbose / F2 contrastive / F3 contrastive + actionable cue on misses.",
         f"# Block {block_letter} uses a distinct gauge set so the post-block mental-model probe cannot be answered by recall from another block.",
         "",
     ]
@@ -355,6 +468,9 @@ def write_lines(path, lines):
 
 def main():
     print("Regenerating study scenarios into", OUT_DIR)
+
+    # 0. F1/F2/F3 panels (rendered from the shared event facts; content held constant)
+    write_panels()
 
     # 1. practice.txt
     lines, _ = render_practice(0, include_task_lifecycle=True)

@@ -1,3 +1,2 @@
 <p><strong>Cycle 08 (auto-aid)</strong></p>
-<p>Scale-1: was 47.0 > upper bound 45.0, auto-aid not engaged. Scale-2: 31.5, in range. Scale-3: 29.7, in range. Scale-4: 30.2, in range. Lights: OK.</p>
-
+<p>Scale-1 was 46.8, above the upper bound of 45.0; the automation did not act on this gauge.</p>
