@@ -39,15 +39,20 @@ uv run pytest -q
   Cegarra et al. (2020); Santiago-Espada et al. (2011); Comstock & Arnegard (1992).
 - **Comms:** response accuracy (hits ÷ signal trials) and response time on hits
   (ms), in a signal-detection framing. Cegarra et al. (2020).
-- **Sysmon (H3):** detection rate + reaction time on aid-skipped events, and
-  overwrite rate + false alarms on aid-handled events (aid vs. user separated via
-  the `automaticsolver` state). Comstock & Arnegard (1992); Santiago-Espada et al.
-  (2011); SAT/agent-transparency framing from Chen et al. (2014), Mercado et al.
-  (2016), Stowers et al. (2017).
-- **Questionnaires (H1/H2):** subjective transparency & trust (1–7), and an
-  objective mental-model score vs. ground truth (set-ID accuracy, miss-count &
-  reliability error, composite explicability). Chen et al. (2014), Mercado et al.
-  (2016), Stowers et al. (2017), Miller (2019), Wang & Yin (2021), Jian et al. (2000).
+- **Sysmon (H3, exploratory):** detection rate + reaction time on aid-skipped
+  events, and overwrite rate + false alarms on aid-handled events (aid vs. user
+  separated via the `automaticsolver` state). Tests whether contrastive framing
+  (F2/F3), not selectivity, aids extraction. Comstock & Arnegard (1992);
+  Santiago-Espada et al. (2011); SAT/agent-transparency framing from Chen et al.
+  (2014), Mercado et al. (2016), Stowers et al. (2017).
+- **Questionnaires (H1/H2 + workload):** subjective transparency (3 items, 1–7,
+  one reverse-keyed, averaged), a single-item workload mechanism check (1–7), and
+  an objective mental-model score vs. ground truth (recognition accuracy,
+  miss-count / close-call / reliability calibration error, composite
+  explicability). Per-block trust and the full NASA-TLX were dropped in the
+  revised design — trust is measured once in the final preference debrief. Chen
+  et al. (2014), Mercado et al. (2016), Stowers et al. (2017), Miller (2019),
+  Wang & Yin (2021), Paas (1992), Jian et al. (2000).
 
 ## Adding data
 
@@ -84,13 +89,13 @@ mislabelled or aborted session is flagged rather than silently analysed.
   - `metrics_resman.py` — resource-management metrics
   - `metrics_comms.py` — communications metrics
   - `metrics_sysmon.py` — system-monitoring metrics (H3: detection, overwrites)
-  - `metrics_questionnaire.py` — transparency/trust (H1) & mental-model (H2)
+  - `metrics_questionnaire.py` — transparency (H1), mental-model (H2) & workload
   - `aggregate.py` — assemble the tidy per-block table
   - `validation.py` — cross-check each session against the study design
   - `study_design.py` — embedded Latin-square orders and gauge→block map
 - `notebooks/01_resman_comms_performance.ipynb` — H4: non-automated task performance
-- `notebooks/02_sysmon_detection_overwrite.ipynb` — H3: miss detection & aid overwrites
-- `notebooks/03_questionnaires.ipynb` — H1/H2: transparency, trust, mental-model, debrief
+- `notebooks/02_sysmon_detection_overwrite.ipynb` — H3 (exploratory): miss detection & aid overwrites
+- `notebooks/03_questionnaires.ipynb` — H1/H2: transparency, mental-model, workload, preference debrief
 - `session_logs/` — curated input logs (only these are analysed)
 - `tests/` — pytest unit + integration tests
 - `outputs/` — generated CSVs and figures (gitignored)

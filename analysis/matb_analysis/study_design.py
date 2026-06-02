@@ -42,10 +42,12 @@ GAUGE_TO_BLOCK: dict[str, str] = {
 }
 
 # Per-block ground truth for scoring the mental-model probe (H2).
-# Each block has 9 sysmon events; the aid skips 2 of them (EVENT_PATTERN),
-# so its reliability is 7/9. The aid acts on (is "responsible for") exactly the
-# two gauges of that block's set; the other indicators it never touches.
+# Each block has 9 sysmon events: 5 routine + 2 near-miss (aid acts just in time)
+# + 2 miss (aid does not act). The aid skips 2 of the 9, so its reliability is
+# 7/9 (~78%). The aid acts on (is "responsible for") exactly the two gauges of
+# that block's set; the other indicators it never touches.
 N_EVENTS_PER_BLOCK = 9
 N_MISSES_PER_BLOCK = 2
+N_NEARMISS_PER_BLOCK = 2
 TRUE_RELIABILITY_PCT = 100.0 * (N_EVENTS_PER_BLOCK - N_MISSES_PER_BLOCK) / N_EVENTS_PER_BLOCK
 
