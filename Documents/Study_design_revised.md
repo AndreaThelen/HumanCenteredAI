@@ -40,8 +40,8 @@ single-shot decisions; we test it under continuous multitasking load.
   highest under the contrastive forms (F2/F3). The opposite directions of H1 and H2 are the
   operational signature of explainability ≠ explicability.
 - **H3 — Contrastive framing aids extraction (supporting).** Because the relevant fact is
-  easier to read off a contrastive panel, participants (a) detect more automation **misses**
-  and (b) make fewer unnecessary **overwrites** of correct aid actions under F2/F3 than F1.
+  easier to read off a contrastive panel, participants detect more automation **misses**
+  under F2/F3 than F1.
   *(Reframed from "selectivity" — the mechanism is framing, not frequency.)*
 - **H4 — Saved reading time is redeployed (supporting).** Performance on the non-aided
   tasks is higher under F2/F3 than F1, because less time is spent reading the panel.
@@ -211,8 +211,7 @@ just once, so it adds negligible load while triangulating the objective DVs.
 | Mental-model probe (5 sliders: 3 calibration + 2 recognition, vs. ground truth) → objective explicability score | Questionnaire / block | **H2** (objective half of H1 crossover) |
 | Subjective transparency (3 items) | Questionnaire / block | **H1** |
 | Subjective workload (single item) | Questionnaire / block | mechanism for H1, H2, H4 |
-| Miss detection: hit/miss + reaction time | Platform log | **H3a** |
-| Unnecessary overwrites of correct aid actions | Platform log | **H3b** |
+| Miss detection: hit/miss + reaction time | Platform log | **H3** |
 | Non-aided task performance (comms, resource mgmt, scheduling) | Platform log | **H4** |
 | Preference debrief (forced choice: most informative / useful / trustworthy / least distracting / self-chosen) | Questionnaire / end | triangulation |
 
