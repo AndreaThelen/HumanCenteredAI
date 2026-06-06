@@ -30,12 +30,11 @@
 \addbibresource{references.bib}
 
 % ---------- TITLE & AUTHOR ----------
-\title{\textbf{Linguistic Form of Explanation: Explainability vs.\ Explicability of an Automation Aid under Multitasking Load}}
+\title{\textbf{Form of Explanation: Explainability vs.\ Explicability of an Automation Aid under Multitasking Load}}
 \author{
 \begin{tabular}{c}
-Lilian Obidike$^{1}$, Sheethal Mohan Prabhu$^{1}$ and Andrea Thelen$^{1}$\\[2pt]
-\small $^{1}$Institute of Information Systems, University of Lübeck, Lübeck, Germany\\
-\small \texttt{Group Z --- Human-Centered Trustworthy AI (CS5076-KP12)}
+Lilian Obidike, Sheethal Mohan Prabhu and Andrea Thelen\\[2pt]
+\small \texttt{Group Z --- Human-Centered Trustworthy AI (CS5076-KP12) --- Summer term 2026}
 \end{tabular}
 }
 \date{}
@@ -57,11 +56,8 @@ Lilian Obidike$^{1}$, Sheethal Mohan Prabhu$^{1}$ and Andrea Thelen$^{1}$\\[2pt]
 \begin{minipage}{0.95\textwidth}
 \setstretch{1.0}
 
-\textbf{Introduction:} When an automation aid explains its reasoning, two systems can be equally \textit{transparent} on paper yet differ in whether the operator actually understands and acts on the explanation. We separate \textit{explainability} (the system producing an explanation) from \textit{explicability} (the explanation being understood and used), and ask whether the \textit{linguistic form} of an explanation matters when the action-relevant information it carries is held constant.
-\textbf{Methods:} In a within-subjects study on the OpenMATB multitasking platform, participants concurrently perform four supervisory tasks while a partially reliable automation aid ($\sim$78\%) runs only on system monitoring. Across three counterbalanced blocks the aid's behaviour is identical and only the wording of its explanation panel changes: verbose (F1), contrastive (F2), and contrastive-plus-actionable (F3), with the action-relevant facts held constant. After each block we record subjective transparency, an objective mental-model probe, and a single workload item; the platform logs miss-detection and non-aided task performance, and a one-off preference debrief captures trust.
-\textbf{Results:} \textit{[To be completed after data collection and analysis.]}
-\textbf{Discussion:} \textit{[To be completed.]}
-\textbf{Conclusion:} \textit{[To be completed.]}
+\textbf{Introduction:} 
+TODO
 \vspace{0.5em}
 
 
@@ -100,28 +96,34 @@ The project is anchored in two lecture topics. The \textit{transparency} block a
 Transparency studies in human--agent teaming show that giving operators more information about an agent's reasoning and uncertainty can improve trust calibration and decision quality \parencite{Mercado2016,Stowers2017}. These studies vary the \textit{level} of information but do not separate information \textit{content} from \textit{presentation}. In parallel, XAI research on AI-assisted decision-making finds that explanations frequently increase users' agreement and subjective sense of understanding without a matching increase in objective understanding or error detection \parencite{Bansal2021,WangYin2021}. Crucially, these dissociation findings come almost entirely from single-task settings, where the user can devote full attention to the explanation.
 
 \subsection{Research gap}
-Two gaps follow. First, prior transparency work does not distinguish the content of an explanation with its linguistic form; it is therefore not known whether linguistic form alone --- holding informationcontent constant --- affects perceived transparency and the operator's mental model. Second, the explainability--explicability dissociation has been demonstrated under full attention but not under \textit{multitasking load}, the very condition under which supervisory operators usually work. If a long, status-log-style explanation makes operators feel informed without enabling them to anticipate the system's next action, they may miss automation errors with far-reaching consequences in domains such as aviation, medical monitoring, and autonomous driving aids.
+Two gaps follow. First, prior transparency work does not distinguish the content of an explanation with its linguistic form; it is therefore not known whether linguistic form alone --- holding information content constant --- affects perceived transparency and the operator's mental model. Second, the explainability--explicability dissociation has been demonstrated under full attention but not under \textit{multitasking load}, the very condition under which supervisory operators usually work. If a long, status-log-style explanation makes operators feel informed without enabling them to anticipate the system's next action, they may miss automation errors with far-reaching consequences in domains such as aviation, medical monitoring, and autonomous driving aids.
 
 % ---------- OWN FOCUS ----------
 \section{Research Question and Hypotheses}
 
-\textbf{Research questions.} Both ask whether the \textit{linguistic form} of an automation aid's reasoning explanation --- holding information content constant under multitasking load --- matters, but they target the two halves of the explainability/explicability distinction:
+\textbf{Research questions.} Both ask whether the \textit{linguistic form} of an automation aid's reasoning explanation --- holding information content constant under multitasking load --- matters, but they target the two different aspects of the explainability--explicability dissociation: the subjective feeling of being informed and the objective mental-model update.
 
 \begin{description}
   \item[RQ1 (subjective).] Does the form of the explanation change the operator's \textit{subjective transparency} --- the feeling of being informed? \textit{(addressed by H1)}
   \item[RQ2 (objective).] Does the form of the explanation change whether the operator's \textit{mental model actually updates} --- objective explicability? \textit{(addressed by H2)}
 \end{description}
 
-We compare three forms of explanation that all communicate the same facts (see Section~\ref{sec:forms}). The comparison is therefore between \textit{linguistic forms} of explanation, not between explanation and no explanation. Hypotheses H1 and H2 are the load-bearing pair: The fact that they predict opposite directions is a key sign that explainability and explicability are not the same. H3 and H4 are supporting, and a workload item provides a mechanism check.
+We compare three forms of explanation that all communicate the same facts (see Section~\ref{sec:forms}). The comparison is therefore between \textit{linguistic forms} of explanation, not between the amount of information provided. Hypotheses H1 and H2 are the load-bearing pair: The fact that they predict opposite directions is a key sign that explainability and explicability are not the same. H3 and H4 are supporting hypotheses.
 
 \begin{description}
   \item[H1 (verbose feels more transparent).] Subjective transparency is highest under the verbose form (F1), even though the information content is identical across forms.
   \item[H2 (contrastive form improves explicability).] Post-block mental-model accuracy is highest under the contrastive forms (F2/F3), even though the information content is identical across forms.
-  \item[H3 (contrastive framing aids extraction; supporting).] Because the action-relevant fact is easier to read off a contrastive panel, participants detect a higher proportion of automation-missed events under F2/F3 than under F1.
-  \item[H4 (saved reading time is redeployed; supporting).] Participants achieve higher performance on the non-aided tasks (communications and resource management) under F2/F3 than under F1.
+  \item[H3 (contrastive form improves miss detection).] Because the action-relevant fact is easier to read off a contrastive panel, participants detect a higher proportion of automation-missed events under F2/F3 than under F1.
+  \item[H4 (saved reading time is redeployed).] Participants achieve higher performance on the non-aided tasks (communications and resource management) under F2/F3 than under F1.
 \end{description}
 
 The reasoning behind H1 is that a detailed stream of information makes the system \textit{feel} maximally informative. H2--H4 follow from the prediction that contrastive framing and an actionable cue make the same information easier to process under load, freeing attention and directing it to the events that matter.
+
+% ---------- REFERENCE TO OHTER GROUPS ----------
+\subsection{Reference to other groups}
+Most groups built on the lecture constructs: transparency, trust, mental models, workload. The closest to us vary the \textit{wording} of the aid's messages: \textbf{AH~Group} (actionable vs.\ generic), \textbf{Group~P} (concrete vs.\ vague warnings), \textbf{Group~A} (calm vs.\ neutral tone), team \textbf{It-takes-two} (reason-giving vs.\ status-only), and especially \textbf{Group~K}, which compares no/vague/clear failure messages with length matching and a comprehension check. Other groups are more distant: they add an explanation rather than reframing it, manipulate the system itself (reliability, automation level, or task load) rather than its message, or treat trust as a personal trait or social signal.
+
+What is unique to us is that we hold the \textit{information content constant} across all three forms, isolating linguistic form rather than ``more vs.\ less'' explanation; and we separate \textit{explainability} from \textit{explicability}, predicting them to move in opposite directions (the verbose form feels most transparent, H1, yet the contrastive forms produce the better-updated mental model, H2). Where the majority of our collegues asks ``does clearer explanation raise trust?'', we ask whether an explanation can raise the \textit{feeling} of being informed without improving what the operator actually \textit{knows} --- captured by an objective mental-model probe that, across all groups, only we use.
 
 % ---------- METHOD ----------
 \section{Method}
@@ -146,7 +148,7 @@ A panel fires on \textit{every} event in \textit{every} form (nine times per blo
 \toprule
  & Description and example panel text \\ \midrule
 F1 & \textit{Verbose.} Full-sentence status report on every cycle with exact sensor values. E.g.\ ``Cycle 05 --- Scale-1 was 47.0, above the upper bound of 45.0. The automation did not engage on this gauge.'' \\[4pt]
-F2 & \textit{Contrastive.} Same facts, terse and contrastive. E.g.\ ``Skipped scale-1 --- aid did not act.'' \\[4pt]
+F2 & \textit{Contrastive.} Same facts, tight and contrastive. E.g.\ ``Skipped scale-1 --- aid did not act.'' \\[4pt]
 F3 & \textit{Contrastive + actionable.} F2 plus an explicit operator cue on misses. E.g.\ ``Skipped scale-1 --- aid did not act. \textit{Check it yourself.}'' \\ \bottomrule
 \end{tabular}
 \end{table}
@@ -155,28 +157,55 @@ F3 & \textit{Contrastive + actionable.} F2 plus an explicit operator cue on miss
 The study uses a within-subjects design. Each participant completes all three forms (F1/F2/F3), each paired with one of three different gauge sets (A, B, C). The gauge sets contain different subsets of gauges and lights requiring attention, so that the post-block memory probe cannot be answered from another block's content. The order of F1/F2/F3 is counterbalanced across participants with a Latin square to mitigate learning and order effects; because blocks are crossed with forms, every form meets every gauge set equally often.
 
 \subsection{Procedure}
-Each session lasts approximately 20 minutes: a 3-minute practice phase, followed by three 5-minute experimental blocks (one per form), followed by a debriefing. After each block questionnaires are used in a fixed order --- the objective mental-model probe \textit{first} (to capture the mental model before reflection contaminates it), then subjective transparency, then the single workload item \textit{last}. The battery pauses the MATB clock, the platform logs behaviour continuously, and one final preference questionnaire is completed at the end.
+Each session lasts approximately 20 minutes: a 3-minute practice phase, followed by three 5-minute experimental blocks (one per form), followed by a debriefing. After each block questionnaires are used in a fixed order --- the objective mental-model probe \textit{first} (to capture the mental model before reflection contaminates it), then subjective transparency, then the single workload item \textit{last}. One final preference questionnaire is completed at the end.
 
 \subsubsection{Briefing and debriefing}
 TODO
 
 \subsection{Measures}
-Each measure maps onto a specific hypothesis.
+Each measure maps onto one hypothesis. The questionnaire items are OpenMATB \texttt{genericscales} sliders presented after each block in the fixed order; every slider starts at a neutral position. The two behavioural measures (H3, H4) are read from the continuous platform log.
 
-\textit{Mental-model probe (H2; objective).} After each block the participant answers five sliders implemented with OpenMATB's \texttt{genericscales}, which allow no number entry --- each answer is a position between two verbal anchors. Three \textit{calibration} sliders ask how often the aid failed to step in, how often it acted only just in time, and how reliable it was overall; two \textit{recognition} sliders ask whether the aid acted on a named indicator during the block. Responses are scored offline against the block's ground truth (misses $=2$, near-misses $=2$, reliability $\approx 78\%$; recognition keyed to whether the probed indicator was in the block's set) to yield an objective explicability score. The recognition answers are balanced across blocks (Yes/Yes, Yes/No, No/No), which also defeats an ``the aid always acts'' response bias: a participant who is not tracking cannot score well by answering uniformly. Slider defaults are neutral, so they do not anchor the answer.
+\subsubsection{H1 --- Subjective transparency}
+Three sliders capture the \textit{feeling} of being informed (anchors in brackets):
+\begin{itemize}
+  \item ``The system told me what it was doing.'' \textit{(strongly disagree--strongly agree)}
+  \item ``It was hard to keep track of what the automation was doing.'' \textit{(strongly disagree--strongly agree, reverse-scored)}
+  \item ``The amount of information the system gave me felt about right.'' \textit{(strongly disagree--strongly agree)}
+\end{itemize}
+TODO: argue why these items and not others (literature)
 
-\textit{Subjective transparency (H1).} Three sliders (strongly disagree--strongly agree) capture the feeling of being informed: that the system told the operator what it was doing, that the operator could easily keep track of what the automation was doing, and that the amount of information felt about right (an item on which both too little and too much are unfavourable). At least one item is reverse-scored to detect straight-lining at $N\approx 20$. We deliberately use researcher-designed items rather than a validated instrument: prior transparency studies manipulated transparency as an independent variable and did not measure it subjectively \parencite{Mercado2016,Stowers2017}, comparable XAI work relied on study-specific subjective-understanding items \parencite{WangYin2021}, and published explanation-satisfaction scales were built for a discrete explanation attached to a one-shot decision and contain detail-monotone items that would let the verbose form (F1) score highest by construction, biasing H1 before data collection. Paired with the probe, these items test the H1 dissociation between feeling informed and being accurate.
+\subsubsection{H2 --- Mental-model probe}
+Five sliders measure whether the operator's mental model actually updated. Three \textit{calibration} items rate the aid's error profile (anchors 
+ in brackets):
+\begin{itemize}
+  \item ``How often did the automation fail to act on an indicator that needed attention?'' \textit{(never--on most events)}
+  \item ``How often did the automation step in only just in time --- a close call?'' \textit{(never--on most events)}
+  \item ``Overall, how reliable was the automation this block?'' \textit{(not at all--completely reliable)}
+\end{itemize}
+Two \textit{recognition} items ask whether the aid acted on a named indicator:
+\begin{itemize}
+  \item ``Did the automation act on Scale~X at any point during this block?'' \textit{(yes--no)}
+  \item ``Did the automation act on Warning light~Y at any point during this block?'' \textit{(yes--no)}
+\end{itemize}
+The probed indicators differ by block and their correct answers are balanced (Yes/Yes, Yes/No, No/No) across the three blocks. The responses are scored offline against the block ground truth to create an objective explicability score.
 
-\textit{Workload (mechanism check).} A single Paas-style mental-effort slider (very low--very high) asks how mentally demanding the block felt. Within-subjects, we need only the direction (is F1 higher load?), not the full NASA-TLX decomposition; the item is declared a priori as a mediation check, which keeps the post-block battery short.
+\subsubsection{H3 --- Detection of automation misses}
+Read from the platform log and count the number of automation-missed events (two per block) that the participant successfully detects and handles manually. The proportion of detected misses is compared across forms. For catched misses, calculate the reaction time from the moment the aid's panel fires to the moment the participant clicks on the relevant gauge or light.
 
-\textit{Detection of automation misses (H3; log).} Whenever the aid skips an event the operator should catch it manually; we log hit/miss and reaction time, pooling the six misses per participant (two per block) to stabilise the estimate.
+\subsubsection{H4 --- Non-aided task performance}
+\label{sec:h4-measures}
+H4 tests whether the attention freed by an easier-to-read explanation panel is redeployed to the two tasks the aid never handles: resource management and communications. Both are read directly from the continuous OpenMATB platform log, so no questionnaire is involved. We report two measures per task, chosen to be the standard MATB readouts for that task \parencite{Comstock1992,SantiagoEspada2011,Cegarra2020}.
 
-\textit{Non-aided task performance (H4; log).} Communications, resource-management, and scheduling performance are logged to test whether reading less in the explanation panel frees attention for the unaided tasks.
+\paragraph{Resource management.} Two depleting tanks (A and B) must be held near a target level of 2500 units. We report (i) the \textbf{root-mean-square deviation (RMSD)} of the tank level from target, averaged over the two tanks (lower is better), and (ii) the \textbf{proportion of time the tanks stayed within tolerance} ($\pm 500$ units, i.e.\ the 2000--3000 band; higher is better). RMSD captures the typical size of the deviation the operator allowed to build up, while time-in-tolerance captures how much of the block was spent in an acceptable state; together they index how well the unaided regulation task was maintained \parencite{Comstock1992,SantiagoEspada2011}.
 
-\textit{Preference debrief (trust; triangulation).} Five forced-choice items at the end of the session ask which form felt most informative, most useful, most trustworthy, least distracting, and would be self-chosen for a future task. This is the only place trust is measured; firing once, it adds negligible load while triangulating the objective measures.
+\paragraph{Communications.} The operator must respond to own-call-sign radio requests by tuning the named radio to the requested frequency, while ignoring distractor call signs. We report (i) \textbf{response accuracy}, the proportion of own-call-sign trials answered correctly (higher is better), and (ii) the \textbf{response time on hits}, the latency in milliseconds from the end of the call to a validated response (lower is better). Accuracy indexes how reliably the secondary auditory task was serviced, and response time indexes how promptly, which is the more sensitive marker of spare attentional capacity under load \parencite{Cegarra2020}.
 
-\subsection{Planned analysis}
-TODO
+\subsubsection{Workload check}
+A single mental-effort slider after each block:
+\begin{itemize}
+  \item ``How mentally demanding or overwhelming did this block feel?'' \textit{(very low--very high)}
+\end{itemize}
+TODO: argue why this item is necessary and sufficient to check the mechanism of multitasking load.
 
 % ---------- RESULTS ----------
 \section{Results}
