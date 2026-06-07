@@ -147,9 +147,9 @@ A panel fires on \textit{every} event in \textit{every} form (nine times per blo
 \begin{tabular}{@{}p{0.07\columnwidth}p{0.82\columnwidth}@{}}
 \toprule
  & Description and example panel text \\ \midrule
-F1 & \textit{Verbose.} Full-sentence status report on every cycle with exact sensor values. E.g.\ ``Cycle 05 --- Scale-1 was 47.0, above the upper bound of 45.0. The automation did not engage on this gauge.'' \\[4pt]
-F2 & \textit{Contrastive.} Same facts, tight and contrastive. E.g.\ ``Skipped scale-1 --- aid did not act.'' \\[4pt]
-F3 & \textit{Contrastive + actionable.} F2 plus an explicit operator cue on misses. E.g.\ ``Skipped scale-1 --- aid did not act. \textit{Check it yourself.}'' \\ \bottomrule
+F1 & \textit{Verbose.} Full-sentence status report on every cycle with exact sensor values. E.g.\ ``Cycle 05 (auto-aid) --- Scale-1 was 48.0, above the upper bound of 45.0; the automation did not act on this gauge.'' \\[4pt]
+F2 & \textit{Contrastive.} Same facts, tight and contrastive. E.g.\ ``Skipped scale-1 --- auto-aid did not act.'' \\[4pt]
+F3 & \textit{Contrastive + actionable.} F2 plus an explicit operator cue on misses. E.g.\ ``Skipped scale-1 --- auto-aid did not act. \textit{Check it yourself.}'' \\ \bottomrule
 \end{tabular}
 \end{table}
 
@@ -175,19 +175,13 @@ Three sliders capture the \textit{feeling} of being informed (anchors in bracket
 TODO: argue why these items and not others (literature)
 
 \subsubsection{H2 --- Mental-model probe}
-Five sliders measure whether the operator's mental model actually updated. Three \textit{calibration} items rate the aid's error profile (anchors 
- in brackets):
+Three yes/no sliders measure whether the operator's mental model actually updated. Each item targets one \textit{active} gauge of the block by its role: within each block the aid \textit{handles} one gauge (acts on it, and both near-misses land there) and \textit{misses} the other (it never acts on it). Every correct answer is therefore fixed by what happened in \textit{this} block, not by a constant strategy learned once and reused (anchors in brackets):
 \begin{itemize}
-  \item ``How often did the automation fail to act on an indicator that needed attention?'' \textit{(never--on most events)}
-  \item ``How often did the automation step in only just in time --- a close call?'' \textit{(never--on most events)}
-  \item ``Overall, how reliable was the automation this block?'' \textit{(not at all--completely reliable)}
+  \item ``Did the automation act on [gauge] at any point during this block?'' \textit{(no--yes; correct answer Yes for the handled gauge)}
+  \item ``Did the automation FAIL to act on [gauge] at some point, leaving you to handle it yourself?'' \textit{(no--yes; correct answer Yes for the missed gauge)}
+  \item ``Was there a close call (near miss) on [gauge] during this block?'' \textit{(no--yes; correct answer Yes for the handled gauge, which carries both near-misses)}
 \end{itemize}
-Two \textit{recognition} items ask whether the aid acted on a named indicator:
-\begin{itemize}
-  \item ``Did the automation act on Scale~X at any point during this block?'' \textit{(yes--no)}
-  \item ``Did the automation act on Warning light~Y at any point during this block?'' \textit{(yes--no)}
-\end{itemize}
-The probed indicators differ by block and their correct answers are balanced (Yes/Yes, Yes/No, No/No) across the three blocks. The responses are scored offline against the block ground truth to create an objective explicability score.
+The probed gauges and their roles are counterbalanced across blocks, so the correct-answer pattern (Yes/Yes/No in one block, No/No/Yes in the others) embeds no fixed response heuristic. The responses are scored offline against the block ground truth to create an objective explicability score.
 
 \subsubsection{H3 --- Detection of automation misses}
 Read from the platform log and count the number of automation-missed events (two per block) that the participant successfully detects and handles manually. The proportion of detected misses is compared across forms. For catched misses, calculate the reaction time from the moment the aid's panel fires to the moment the participant clicks on the relevant gauge or light.

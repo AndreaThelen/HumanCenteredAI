@@ -62,8 +62,8 @@ _TRUE_VALUES = {"1", "True", "true"}
 # ``--no-effects`` only the baseline is used (all forms identical). ``sd`` is the
 # within-form noise; ``p_sd`` the per-participant random-effect SD (shared across
 # that participant's blocks for the construct, for realistic within-subject corr).
-# Scales: transparency/workload 1..7; mental-model misses/closecalls 0..9, truth
-# 2; reliability 0..100, truth ~78; recognition sliders 0..100, threshold 50.
+# Scales: transparency/workload 1..7; mental-model probe act/miss/close yes/no
+# sliders 0..100, threshold 50 (scored against each gauge's role this block).
 # ---------------------------------------------------------------------------
 EFFECTS: dict[str, dict] = {
     # H1: subjective transparency feeling (higher under verbose F1).
@@ -73,8 +73,8 @@ EFFECTS: dict[str, dict] = {
     "workload": {"base": 4.5, "form": {"F1": 1.0, "F2": -0.2, "F3": -0.1},
                  "sd": 0.6, "p_sd": 0.7},
     # H2 mental-model probe: probability of answering each yes/no probe item on
-    # the correct side (better under the contrastive forms). Drives both the
-    # recognition (`act`) and skip-localisation (`miss`) items.
+    # the correct side (better under the contrastive forms). Drives all three
+    # probe types (`act`, `miss`, `close`).
     "mm_probe_p_correct": {"base": 0.74, "form": {"F1": -0.15, "F2": 0.09, "F3": 0.12},
                            "p_sd": 0.10},
     # H3a: probability the operator detects an aid-skipped miss.

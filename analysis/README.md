@@ -47,9 +47,10 @@ uv run pytest -q
   (2014), Mercado et al. (2016), Stowers et al. (2017).
 - **Questionnaires (H1/H2 + workload):** subjective transparency (3 items, 1–7,
   one reverse-keyed, averaged), a single-item workload mechanism check (1–7), and
-  an objective mental-model score vs. ground truth (recognition accuracy,
-  miss-count / close-call / reliability calibration error, composite
-  explicability). Per-block trust and the full NASA-TLX were dropped in the
+  an objective mental-model score vs. ground truth (a 3-item yes/no probe per
+  block --- act / miss / close, each tied to a named gauge's role this block ---
+  reported as per-type accuracy plus a composite explicability score). Per-block
+  trust and the full NASA-TLX were dropped in the
   revised design — trust is measured once in the final preference debrief. Chen
   et al. (2014), Mercado et al. (2016), Stowers et al. (2017), Miller (2019),
   Wang & Yin (2021), Paas (1992), Jian et al. (2000).

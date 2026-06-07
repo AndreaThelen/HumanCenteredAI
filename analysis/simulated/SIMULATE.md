@@ -95,7 +95,7 @@ The embedded directions mirror the study hypotheses:
 |-----------|-----------|------------|
 | Subjective transparency (1–7) | **F1 highest** (verbose feels most informed) | H1 |
 | Workload (1–7) | **F1 highest** | mechanism check |
-| Mental-model accuracy (calibration + recognition) | **F2/F3 better** | H2 |
+| Mental-model accuracy (act / miss / close localisation) | **F2/F3 better** | H2 |
 | Miss detection rate / RT | **F2/F3 better / faster** | H3a |
 | Overwrites of correct aid actions | **F1 highest** | H3b |
 | Comms accuracy / RT, resman tracking error | **F2/F3 better** | H4 |
@@ -103,8 +103,8 @@ The embedded directions mirror the study hypotheses:
 The H1↔H2 opposite directions (F1 feels most transparent yet F2/F3 yield the more accurate
 mental model) are the explainability ≠ explicability crossover the study targets.
 
-Scales used: transparency/workload 1–7; mental-model `q_misses`/`q_closecalls` 0–9 (truth 2);
-`q_reliability` 0–100 (truth ≈ 78); recognition sliders 0–100 (threshold 50). The reverse-keyed
+Scales used: transparency/workload 1–7; mental-model probe `MM_*_{act,miss,close}` yes/no
+sliders 0–100 (threshold 50), scored against each gauge's role this block. The reverse-keyed
 `Subjective_keep_track` item is emitted reversed (high transparency → low logged value) to
 match how `metrics_questionnaire.py` reverse-scores it.
 
