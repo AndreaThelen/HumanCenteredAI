@@ -33,12 +33,27 @@ QUESTIONNAIRE_GAP_SEC   = 0       # fire questionnaire screens back-to-back. A >
 EVENT_PATTERN = ["R", "R", "NM", "R", "M", "R", "NM", "M", "R"]
 assert len(EVENT_PATTERN) == EVENTS_PER_BLOCK
 
-# Two-element gauge set per block. The pattern alternates a/b across events.
+# Two-element gauge set per block.
 GAUGE_BY_BLOCK = {
     "A": ("scales-1", "scales-3"),
     "B": ("lights-1", "lights-2"),
     "C": ("scales-2", "scales-4"),
 }
+
+# Per block the aid HANDLES one active gauge (acts on it; all routine events and
+# BOTH near-misses land here) and MISSES the other (its only events are the two
+# unhandled failures). This gives each active gauge one clean, distinct role for
+# the post-block mental-model probe (H2): one gauge the aid clearly worked, one it
+# clearly abandoned. Counterbalanced across blocks (the missed gauge is the lower
+# number in A, the higher in B and C) so "the lower-numbered gauge is always
+# missed" is not a usable heuristic.
+HANDLED_GAUGE_BY_BLOCK = {"A": "scales-3", "B": "lights-1", "C": "scales-2"}
+
+
+def missed_gauge(block_letter):
+    """The active gauge the aid skips this block (the non-handled one of the set)."""
+    return next(g for g in GAUGE_BY_BLOCK[block_letter]
+                if g != HANDLED_GAUGE_BY_BLOCK[block_letter])
 
 # Communications schedule inside a block: spacing 30 s, starting 15 s in.
 COMM_PATTERN = ["own", "other", "own", "own", "other",
@@ -89,13 +104,12 @@ def hms(total_sec):
 
 
 def block_event_gauge(block_letter, event_idx):
-    """1-indexed event_idx → gauge name. Alternates the two gauges; pattern keeps
-    each gauge family roughly balanced across routine / nearmiss / miss events."""
-    a, b = GAUGE_BY_BLOCK[block_letter]
-    # Same alternation as the original hand-built scenarios:
-    # event 1=a, 2=b, 3=a, 4=b, 5=a, 6=b, 7=b, 8=a, 9=b
-    mapping = [a, b, a, b, a, b, b, a, b]
-    return mapping[event_idx - 1]
+    """1-indexed event_idx → gauge name. The aid MISSES one gauge of the block (its
+    only events are the two unhandled failures) and HANDLES the other (all routine
+    events plus both near-misses land here), so each active gauge has one clean
+    role for the post-block probe. See PROBE_TARGETS / mental_model_items."""
+    kind = EVENT_PATTERN[event_idx - 1]
+    return missed_gauge(block_letter) if kind == "M" else HANDLED_GAUGE_BY_BLOCK[block_letter]
 
 
 def panel_fires(form, event_idx):
@@ -216,6 +230,80 @@ def write_panels():
     print(f"  wrote 81 panel files into {PANELS_DIR}")
 
 
+# --- Post-block mental-model probe (H2) -----------------------------------
+# Three yes/no questions per block, each about ONE active gauge, whose correct
+# answer is fixed by THIS block's roles (handled vs missed, above) -- so the probe
+# can never drift from the scenario and genuinely tests per-block mental-model
+# updating (the earlier count/reliability items were dropped: their truth was a
+# design constant, identical every block, so they rewarded learning the design
+# rather than tracking the block). Question types:
+#   act   -- "did the aid act on X?"             (truth Yes if X is the handled gauge)
+#   miss  -- "did the aid FAIL to act on Y?"     (truth Yes if Y is the missed gauge)
+#   close -- "was there a close call on Z?"      (truth Yes if Z is the handled gauge,
+#                                                 which carries both near-misses)
+#
+# Each question targets a gauge by ROLE; the roles are counterbalanced across
+# blocks (PROBE_TARGETS) so no fixed yes/no answer pattern wins, and the act/miss
+# questions always name DIFFERENT gauges (the "X" and "Y" of the design).
+QUESTIONNAIRES_DIR = OUT_DIR.parent.parent / "questionnaires" / "study"
+PROBE_TARGETS = {
+    "A": [("act", "handled"), ("miss", "missed"), ("close", "missed")],   # Yes Yes No
+    "B": [("act", "missed"),  ("miss", "handled"), ("close", "handled")],  # No  No  Yes
+    "C": [("act", "missed"),  ("miss", "handled"), ("close", "handled")],  # No  No  Yes
+}
+
+
+def indicator_label(gauge):
+    """Display name used in the probe wording (matches the gauge labels in OpenMATB)."""
+    family, num = gauge.split("-")
+    if family == "scales":
+        return f"Scale {num}"
+    return f"Status light {num}" if num == "1" else f"Warning light {num}"
+
+
+def gauge_slider_token(gauge):
+    """'scales-1' -> 'scale1', 'lights-2' -> 'light2' (the slider-id form)."""
+    family, num = gauge.split("-")
+    return f"{'scale' if family == 'scales' else 'light'}{num}"
+
+
+def role_gauge(block_letter, role):
+    return (HANDLED_GAUGE_BY_BLOCK[block_letter] if role == "handled"
+            else missed_gauge(block_letter))
+
+
+def mental_model_items(block_letter):
+    """The 3 probe items for a block: (qtype, gauge)."""
+    return [(qtype, role_gauge(block_letter, role))
+            for qtype, role in PROBE_TARGETS[block_letter]]
+
+
+def render_mental_model(block_letter):
+    lines = []
+    for qtype, gauge in mental_model_items(block_letter):
+        sid = f"MM_{block_letter}_{qtype}_{gauge_slider_token(gauge)}"
+        label = indicator_label(gauge)
+        if qtype == "act":
+            prompt = f"Did the automation act on {label} at any point during this block?"
+        elif qtype == "miss":
+            prompt = (f"Did the automation FAIL to act on {label} at some point, "
+                      f"leaving you to handle it yourself?")
+        else:  # close
+            prompt = f"Was there a close call (near miss) on {label} during this block?"
+        lines.append(f"{sid};{prompt};No/Yes;0/100/50")
+    return lines
+
+
+def write_mental_model_probes():
+    """(Re)generate the three post-block mental-model questionnaire files."""
+    QUESTIONNAIRES_DIR.mkdir(parents=True, exist_ok=True)
+    for block_letter in ("A", "B", "C"):
+        lines = render_mental_model(block_letter)
+        path = QUESTIONNAIRES_DIR / f"mental_model_block_{block_letter}.txt"
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print(f"  wrote {path.name}  ({len(lines)} items)")
+
+
 # --- Rendering blocks -----------------------------------------------------
 def render_briefing(form, t0):
     return [
@@ -254,6 +342,27 @@ def render_comms(t0):
     for i, prompt in enumerate(COMM_PATTERN[:EVENTS_PER_BLOCK]):
         t = t0 + COMM_FIRST_OFFSET_SEC + i * COMM_GAP_SEC
         out.append(f"{hms(t)};communications;radioprompt;{prompt}")
+    out.append("")
+    return out
+
+
+# Resman default state (mirrors plugins/resman.py): every block starts here.
+RESMAN_DEFAULT_TANKS = [("a", 2500), ("b", 2500), ("c", 1000),
+                        ("d", 1000), ("e", 3000), ("f", 3000)]
+
+
+def render_resman_reset(t0):
+    """Reset resman tanks and pumps to their defaults so every block starts from an
+    identical state. In full_PXX the tasks run continuously (never stopped/restarted
+    between blocks), so without this the mutated tank levels -- and any failed/active
+    pumps -- drift from one block straight into the next. These set_parameter events
+    fire at the block's t0; while the briefing is on screen the scenario clock is
+    paused, so they take effect the instant the MATB tasks resume for the block."""
+    out = ["# 0. Reset resman to default state (identical block-start conditions)"]
+    for letter, level in RESMAN_DEFAULT_TANKS:
+        out.append(f"{hms(t0)};resman;tank-{letter}-level;{level}")
+    for n in range(1, 9):
+        out.append(f"{hms(t0)};resman;pump-{n}-state;off")
     out.append("")
     return out
 
@@ -341,6 +450,7 @@ def render_block(form, block_letter, t0, include_task_lifecycle):
         "",
     ]
     lines += render_briefing(form, t0)
+    lines += render_resman_reset(t0)
     lines += render_sysmon_params(t0)
     if include_task_lifecycle:
         lines += render_task_starts(t0, with_auto_aid=True)
@@ -471,6 +581,10 @@ def main():
 
     # 0. F1/F2/F3 panels (rendered from the shared event facts; content held constant)
     write_panels()
+
+    # 0b. Post-block mental-model probe questionnaires (H2), derived from the same
+    #     event/gauge schedule so their correct answers can never drift.
+    write_mental_model_probes()
 
     # 1. practice.txt
     lines, _ = render_practice(0, include_task_lifecycle=True)

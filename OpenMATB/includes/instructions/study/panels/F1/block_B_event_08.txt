@@ -1,2 +1,2 @@
 <p><strong>Cycle 08 (auto-aid)</strong></p>
-<p>The green status light (light-1) switched off; the automation did not restore it.</p>
+<p>The red warning light (light-2) came on; the automation did not clear it.</p>

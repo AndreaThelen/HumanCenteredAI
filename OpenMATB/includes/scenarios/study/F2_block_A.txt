@@ -7,6 +7,22 @@
 0:00:00;instructions;filename;study/briefing_F2.txt
 0:00:00;instructions;start
 
+# 0. Reset resman to default state (identical block-start conditions)
+0:00:00;resman;tank-a-level;2500
+0:00:00;resman;tank-b-level;2500
+0:00:00;resman;tank-c-level;1000
+0:00:00;resman;tank-d-level;1000
+0:00:00;resman;tank-e-level;3000
+0:00:00;resman;tank-f-level;3000
+0:00:00;resman;pump-1-state;off
+0:00:00;resman;pump-2-state;off
+0:00:00;resman;pump-3-state;off
+0:00:00;resman;pump-4-state;off
+0:00:00;resman;pump-5-state;off
+0:00:00;resman;pump-6-state;off
+0:00:00;resman;pump-7-state;off
+0:00:00;resman;pump-8-state;off
+
 # 2. Sysmon parameters (Frontiers 2024 moderate-load configuration)
 0:00:00;sysmon;automaticsolverdelay;1000
 0:00:00;sysmon;alerttimeout;10000
@@ -38,9 +54,9 @@
 0:04:15;resman;pump-3-state;on
 
 # 6. Sysmon experimental events (9 total, 7 auto-solved + 2 missed)
-# Event 01 at 0:00:30 : scales-1 (routine)
+# Event 01 at 0:00:30 : scales-3 (routine)
 0:00:29;sysmon;automaticsolver;True
-0:00:30;sysmon;scales-1-failure;True
+0:00:30;sysmon;scales-3-failure;True
 0:00:32;instructions;filename;study/panels/F2/block_A_event_01.txt
 0:00:32;instructions;start
 
@@ -50,9 +66,9 @@
 0:01:02;instructions;filename;study/panels/F2/block_A_event_02.txt
 0:01:02;instructions;start
 
-# Event 03 at 0:01:30 : scales-1 (nearmiss)
+# Event 03 at 0:01:30 : scales-3 (nearmiss)
 0:01:29;sysmon;automaticsolver;True
-0:01:30;sysmon;scales-1-failure;True
+0:01:30;sysmon;scales-3-failure;True
 0:01:32;instructions;filename;study/panels/F2/block_A_event_03.txt
 0:01:32;instructions;start
 

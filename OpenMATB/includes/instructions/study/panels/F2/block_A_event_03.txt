@@ -1,2 +1,2 @@
 <p><strong>Auto-aid panel</strong></p>
-<p>Reset scale-1 - would have failed in ~2.0 s.</p>
+<p>Reset scale-3 - would have failed in ~2.0 s.</p>

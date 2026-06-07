@@ -1,2 +1,2 @@
 <p><strong>Cycle 04 (auto-aid)</strong></p>
-<p>The red warning light (light-2) came on; the automation cleared it.</p>
+<p>The green status light (light-1) switched off; the automation restored it.</p>

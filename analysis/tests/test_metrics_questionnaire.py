@@ -1,7 +1,6 @@
 import math
 import pandas as pd
 from matb_analysis.metrics_questionnaire import questionnaire_metrics
-from matb_analysis.study_design import TRUE_RELIABILITY_PCT
 
 COLS = ["logtime", "scenario_time", "type", "module", "address", "value"]
 
@@ -38,52 +37,54 @@ def test_workload_single_item():
     assert math.isclose(m["workload"], 6.0)
 
 
-def test_mental_model_block_A_perfect_revised_scale():
-    # Block A set = scales-1, scales-3 -> both recognition truths are "Yes".
-    # Recognition sliders on the revised 0..100 scale.
+def test_mental_model_block_A_all_correct():
+    # Block A: handled = Scale 3, missed = Scale 1. The probe (PROBE_TARGETS["A"])
+    # asks: act on Scale 3 (->Yes), fail on Scale 1 (->Yes), close call on Scale 1
+    # (->No). A perfect respondent (0..100 scale).
     m = questionnaire_metrics(_q([
-        ("MM_A_q_misses", 2),
-        ("MM_A_q_closecalls", 2),
-        ("MM_A_q_reliability", TRUE_RELIABILITY_PCT),
-        ("MM_A_rec_scale1", 90),   # Yes (correct)
-        ("MM_A_rec_scale3", 100),  # Yes (correct)
+        ("MM_A_act_scale3", 90),    # Yes (correct: Scale 3 is handled)
+        ("MM_A_miss_scale1", 95),   # Yes (correct: Scale 1 is missed)
+        ("MM_A_close_scale1", 5),   # No  (correct: close calls are on Scale 3)
     ]))
-    assert math.isclose(m["mm_misses_error"], 0.0)
-    assert math.isclose(m["mm_closecalls_error"], 0.0)
-    assert math.isclose(m["mm_reliability_error"], 0.0, abs_tol=1e-6)
-    assert math.isclose(m["mm_rec_accuracy"], 1.0)
-    assert math.isclose(m["mm_explicability"], 1.0, abs_tol=1e-6)
+    assert math.isclose(m["mm_act_accuracy"], 1.0)
+    assert math.isclose(m["mm_miss_accuracy"], 1.0)
+    assert math.isclose(m["mm_close_accuracy"], 1.0)
+    assert math.isclose(m["mm_explicability"], 1.0)
 
 
-def test_mental_model_block_B_partial_and_errors():
-    # Block B set = lights-1, lights-2. Probes: light2 (in set -> Yes), scale1
-    # (out of set -> No). Recognition on the 0..1 pilot scale.
+def test_mental_model_truth_by_role():
+    # Cross-check the three truths against the roles directly (block A).
+    # act: Yes only for the handled gauge (Scale 3); miss: Yes only for the missed
+    # gauge (Scale 1); close: Yes only for the handled gauge (Scale 3).
     m = questionnaire_metrics(_q([
-        ("MM_B_rec_light2", 1.0),   # Yes (correct)
-        ("MM_B_rec_scale1", 1.0),   # Yes (wrong: truth No)
-        ("MM_B_q_misses", 5),       # |5 - 2| = 3
-        ("MM_B_q_closecalls", 0),   # |0 - 2| = 2
-        ("MM_B_q_reliability", 50),  # |50 - 77.78|
+        ("MM_A_act_scale1", 90),    # Yes (WRONG: Scale 1 is missed -> act=No)
+        ("MM_A_miss_scale3", 90),   # Yes (WRONG: Scale 3 is handled -> miss=No)
+        ("MM_A_close_scale3", 90),  # Yes (correct: close call is on Scale 3)
     ]))
-    assert math.isclose(m["mm_rec_accuracy"], 0.5)   # 1 of 2 correct
-    assert math.isclose(m["mm_misses_error"], 3.0)
-    assert math.isclose(m["mm_closecalls_error"], 2.0)
-    assert math.isclose(m["mm_reliability_error"], abs(50 - TRUE_RELIABILITY_PCT))
+    assert math.isclose(m["mm_act_accuracy"], 0.0)
+    assert math.isclose(m["mm_miss_accuracy"], 0.0)
+    assert math.isclose(m["mm_close_accuracy"], 1.0)
+    assert math.isclose(m["mm_explicability"], 1.0 / 3.0)
 
 
-def test_block_C_all_no_recognition():
-    # Block C set = scales-2, scales-4. Probes: light1, light2 -> both out of
-    # set -> both "No". Slider parked low (0..100 scale) = No.
+def test_mental_model_pilot_0_1_scale():
+    # Block B: handled = Status light 1, missed = Warning light 2. Recognition-free
+    # subset on the early 0..1 pilot scale (threshold at the 0.5 midpoint).
     m = questionnaire_metrics(_q([
-        ("MM_C_rec_light1", 0),
-        ("MM_C_rec_light2", 10),
+        ("MM_B_miss_light2", 1.0),   # Yes (correct: Warning light 2 is missed)
+        ("MM_B_close_light1", 1.0),  # Yes (correct: close calls on Status light 1)
     ]))
-    assert math.isclose(m["mm_rec_accuracy"], 1.0)   # both correctly "No"
+    assert math.isnan(m["mm_act_accuracy"])           # no act item present
+    assert math.isclose(m["mm_miss_accuracy"], 1.0)
+    assert math.isclose(m["mm_close_accuracy"], 1.0)
+    assert math.isclose(m["mm_explicability"], 1.0)
 
 
 def test_empty_is_safe():
     m = questionnaire_metrics(pd.DataFrame([], columns=COLS))
     assert math.isnan(m["subj_transparency"])
     assert math.isnan(m["workload"])
-    assert math.isnan(m["mm_rec_accuracy"])
+    assert math.isnan(m["mm_act_accuracy"])
+    assert math.isnan(m["mm_miss_accuracy"])
+    assert math.isnan(m["mm_close_accuracy"])
     assert math.isnan(m["mm_explicability"])

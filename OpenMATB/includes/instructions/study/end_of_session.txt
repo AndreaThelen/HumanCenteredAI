@@ -1,7 +1,7 @@
 <h1>End of session</h1>
 
-<p>You have completed all three experimental blocks. A final short questionnaire will now ask you to compare the three forms of information panel.</p>
+<p>You have completed all three experimental blocks. A final short questionnaire will now ask you to compare the automation messages you saw across the three blocks.</p>
 
-<p>For each question, move the slider toward the form you prefer: <strong>far left = Form 1</strong> (verbose), <strong>middle = Form 2</strong> (concise), <strong>far right = Form 3</strong> (concise + cue).</p>
+<p>For each question, move the slider toward the block you mean: <strong>far left = your first block</strong>, <strong>middle = your second block</strong>, <strong>far right = your third block</strong>.</p>
 
 <p>Press SPACE to continue.</p>

@@ -1,5 +1,5 @@
-PREF_q1_most_informative;Which form felt most INFORMATIVE? (left Form 1 / middle Form 2 / right Form 3);Form 1 (verbose)/Form 3 (concise + cue);1/7/4
-PREF_q2_most_useful;Which form HELPED you most when deciding what to do? (left Form 1 / middle Form 2 / right Form 3);Form 1 (verbose)/Form 3 (concise + cue);1/7/4
-PREF_q3_most_trusted;Which form made you trust the automation most? (left Form 1 / middle Form 2 / right Form 3);Form 1 (verbose)/Form 3 (concise + cue);1/7/4
-PREF_q4_least_distracting;Which form was the LEAST distracting from the other tasks? (left Form 1 / middle Form 2 / right Form 3);Form 1 (verbose)/Form 3 (concise + cue);1/7/4
-PREF_q5_self_chosen;For a future similar task, which form would you choose? (left Form 1 / middle Form 2 / right Form 3);Form 1 (verbose)/Form 3 (concise + cue);1/7/4
+PREF_q1_most_informative;Which block's automation messages felt most INFORMATIVE? (left = 1st block / middle = 2nd / right = 3rd);1st block/3rd block;1/7/4
+PREF_q2_most_useful;Which block's messages HELPED you most when deciding what to do? (left = 1st block / middle = 2nd / right = 3rd);1st block/3rd block;1/7/4
+PREF_q3_most_trusted;Which block's messages made you trust the automation most? (left = 1st block / middle = 2nd / right = 3rd);1st block/3rd block;1/7/4
+PREF_q4_least_distracting;Which block's messages were the LEAST distracting from the other tasks? (left = 1st block / middle = 2nd / right = 3rd);1st block/3rd block;1/7/4
+PREF_q5_self_chosen;For a future similar task, which block's style of messages would you choose? (left = 1st block / middle = 2nd / right = 3rd);1st block/3rd block;1/7/4

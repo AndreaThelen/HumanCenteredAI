@@ -1,2 +1,2 @@
 <p><strong>Auto-aid panel</strong></p>
-<p>Handled scale-1 - aid kept it in range.</p>
+<p>Handled scale-3 - aid kept it in range.</p>

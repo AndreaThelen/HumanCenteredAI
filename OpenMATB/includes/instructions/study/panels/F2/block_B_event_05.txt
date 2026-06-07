@@ -1,2 +1,2 @@
 <p><strong>Auto-aid panel</strong></p>
-<p>Skipped light-1 - auto-aid did not act.</p>
+<p>Skipped light-2 - auto-aid did not act.</p>

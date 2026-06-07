@@ -1,2 +1,2 @@
 <p><strong>Cycle 03 (auto-aid)</strong></p>
-<p>Scale-1 rose to 47.2, above the 45.0 bound, for 2.1 s; the automation reset it to 32.0. Without the reset it would have failed in ~2.0 s.</p>
+<p>Scale-3 rose to 47.2, above the 45.0 bound, for 2.1 s; the automation reset it to 32.0. Without the reset it would have failed in ~2.0 s.</p>

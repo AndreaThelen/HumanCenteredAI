@@ -1,2 +1,2 @@
 <p><strong>Auto-aid panel</strong></p>
-<p>Cleared light-2 - would have failed in ~2.0 s.</p>
+<p>Restored light-1 - would have failed in ~2.0 s.</p>
