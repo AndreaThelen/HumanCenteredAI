@@ -18,4 +18,4 @@
 *.xdv
 
 # Compiled PDF (build artifact — regenerated from main.tex)
-main.pdf
+# main.pdf
