@@ -1,9 +1,13 @@
-# OpenMATB resman & communications performance analysis
+# OpenMATB explanation-form study analysis
 
-Computes resource-management and communications task performance per experimental
-block and compares the three explanation forms (F1/F2/F3) for hypothesis H4
-(saved attention is redeployed: performance on the non-automated tasks is higher
-under F2/F3 than under F1).
+Computes per-block metrics from OpenMATB study sessions and compares the three
+explanation forms (F1 verbose / F2 contrastive / F3 contrastive+actionable),
+holding information content constant, across the study's hypotheses:
+
+- **H1** subjective transparency, **H2** mental-model accuracy (explicability),
+- **H3** detection of automation misses, **H4** non-aided task performance
+  (resource management + communications),
+- plus a workload mechanism check and an end-of-session preference debrief.
 
 ## Setup
 
@@ -15,14 +19,14 @@ uv sync
 ## Run the analysis
 
 ```bash
-uv run jupyter lab    # open notebooks/01_resman_comms_performance.ipynb
+uv run jupyter lab    # then open any notebook under notebooks/ (one per hypothesis)
 ```
 
-Or execute headless:
+Or execute one headless:
 
 ```bash
 uv run jupyter nbconvert --to notebook --execute --inplace \
-    notebooks/01_resman_comms_performance.ipynb
+    notebooks/H2_mental_model.ipynb
 ```
 
 Outputs (tidy table + figures) are written to `outputs/` (gitignored).
@@ -68,7 +72,7 @@ it explicitly: `find_study_sessions(r"D:\path\to\logs")`.
 The pipeline auto-discovers study sessions under `session_logs/`, keeps only those
 whose scenario is under `scenarios/study/`, segments each into its experimental
 blocks (F1/F2/F3 × A/B/C), and computes one tidy row of metrics per
-(participant, form, block). It runs unchanged as more participant data (P01–P10)
+(participant, form, block). It runs unchanged as more participant data (P01–P20)
 is collected.
 
 Everything is read from the logs themselves — the participant from the
@@ -94,9 +98,12 @@ mislabelled or aborted session is flagged rather than silently analysed.
   - `aggregate.py` — assemble the tidy per-block table
   - `validation.py` — cross-check each session against the study design
   - `study_design.py` — embedded Latin-square orders and gauge→block map
-- `notebooks/01_resman_comms_performance.ipynb` — H4: non-automated task performance
-- `notebooks/02_sysmon_detection_overwrite.ipynb` — H3 (exploratory): miss detection & aid overwrites
-- `notebooks/03_questionnaires.ipynb` — H1/H2: transparency, mental-model, workload, preference debrief
+- `notebooks/H1_subjective_transparency.ipynb` — H1: subjective transparency
+- `notebooks/H2_mental_model.ipynb` — H2: mental-model accuracy (explicability)
+- `notebooks/H3_detection_of_misses.ipynb` — H3: detection of automation misses
+- `notebooks/H4_nonaided_performance.ipynb` — H4: non-aided task performance (resman + comms)
+- `notebooks/Workload_check.ipynb` — workload mechanism check
+- `notebooks/Preference_debrief.ipynb` — end-of-session preference debrief
 - `session_logs/` — curated input logs (only these are analysed)
 - `tests/` — pytest unit + integration tests
 - `outputs/` — generated CSVs and figures (gitignored)

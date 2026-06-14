@@ -10,8 +10,8 @@
 # questionnaires is added. Scenario MATB time is ~18:30.
 #
 # History: the original design used 5 min practice, 6:30 blocks, and 12
-# sysmon events per block. The current values (3, 5:00, 9) match
-# Documents/Study_proposal.md.
+# sysmon events per block. The current values (3, 5:00, 9) match the procedure
+# described in Documents/Report/main.tex (Section 4, "Procedure").
 
 from pathlib import Path
 
@@ -245,6 +245,10 @@ def write_panels():
 # Each question targets a gauge by ROLE; the roles are counterbalanced across
 # blocks (PROBE_TARGETS) so no fixed yes/no answer pattern wins, and the act/miss
 # questions always name DIFFERENT gauges (the "X" and "Y" of the design).
+# "truth Yes if handled" (etc.) is the answer rule, NOT the target gauge: a
+# question may be asked about the role for which the answer is "No" -- e.g. block
+# A asks `close` about the MISSED gauge (answer No), so A is Yes/Yes/No while
+# B/C are No/No/Yes. The target gauge per item is set by PROBE_TARGETS below.
 QUESTIONNAIRES_DIR = OUT_DIR.parent.parent / "questionnaires" / "study"
 PROBE_TARGETS = {
     "A": [("act", "handled"), ("miss", "missed"), ("close", "missed")],   # Yes Yes No
@@ -553,8 +557,9 @@ def render_practice(t0, include_task_lifecycle):
 
 # --- Final questionnaires -------------------------------------------------
 def render_final(t0):
-    """End-of-session battery. Per Documents/Study_proposal.md the only
-    remaining item is the preference debrief comparing the three forms."""
+    """End-of-session battery. Per the design in Documents/Report/main.tex
+    (Section 4, "Procedure") the only remaining item is the preference debrief
+    comparing the three forms."""
     g = QUESTIONNAIRE_GAP_SEC
     lines = [
         f"# Final session questionnaires - run ONCE after the third experimental block",

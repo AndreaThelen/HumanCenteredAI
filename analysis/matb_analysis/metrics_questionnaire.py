@@ -14,6 +14,12 @@ NASA-TLX were dropped in the revised design):
     - ``miss``  -- "did the aid FAIL to act on Y?"    (truth Yes if Y is missed).
     - ``close`` -- "was there a close call on Z?"     (truth Yes if Z is handled;
       both near-misses land on the handled gauge).
+  Note: "truth Yes if handled" is the *answer rule*, not which gauge is asked
+  about. The probe target gauge is counterbalanced across blocks
+  (``PROBE_TARGETS``), so e.g. block A's ``close`` item is deliberately asked
+  about the *missed* gauge -- correct answer "No" -- to break any fixed yes/no
+  pattern. Scoring stays correct because it reads the actual gauge from the
+  logged slider id and applies the rule to that gauge (not to ``PROBE_TARGETS``).
   Every item's correct answer is determined by *this* block's roles, so it cannot
   be answered from a design-constant strategy (the old count/reliability items,
   whose truth was identical in every block, were dropped).
@@ -47,6 +53,12 @@ _WORKLOAD_KEY = "Workload_overall"
 
 _TRANSPARENCY_MIN, _TRANSPARENCY_MAX = 1, 7  # 1..7 agreement scale
 
+# Yes/no probe sliders are logged on 0..100 (neutral default 50) in the revised
+# design, so "Yes" is any response at or above the 50 midpoint. Pinned rather
+# than inferred from the data: inferring the scale from the observed maximum
+# misreads a block whose three answers all sit near the floor (e.g. all "no").
+_PROBE_SCALE_MAX = 100.0
+
 # Mental-model probe sliders: MM_<BLK>_<qtype>_<scale|light><n>, all yes/no.
 _PROBE_RE = re.compile(r"^MM_([ABC])_(act|miss|close)_(scale|light)(\d)$")
 
@@ -76,14 +88,13 @@ def _mean(vals: list[float]) -> float:
     return float(np.mean(vals)) if vals else float("nan")
 
 
-def _rec_is_yes(value: float, scale_max: float) -> int:
-    """1 if a recognition slider sits in the upper ("Yes") half of its range.
+def _rec_is_yes(value: float) -> int:
+    """1 if a yes/no probe slider sits in the upper ("Yes") half of its range.
 
-    Robust to the two scales seen in the data: the revised design declares the
-    recognition sliders on 0..100 (neutral default 50), while an early pilot ran
-    them on 0..1. Threshold at the midpoint of whichever range applies.
+    The revised design always logs the probe sliders on 0..100 (neutral default
+    50), so "Yes" is any value at or above the 50 midpoint.
     """
-    return int(value >= scale_max / 2.0)
+    return int(value >= _PROBE_SCALE_MAX / 2.0)
 
 
 def questionnaire_metrics(block_rows: pd.DataFrame) -> dict[str, float]:
@@ -107,8 +118,6 @@ def questionnaire_metrics(block_rows: pd.DataFrame) -> dict[str, float]:
     # correct/incorrect against the block's roles. Three question types -- `act`,
     # `miss`, `close` -- are tallied separately and pooled into the composite.
     probe = {k: v for k, v in s.items() if _PROBE_RE.match(k) and pd.notna(v)}
-    scale_max = max(probe.values(), default=0.0)
-    scale_max = 1.0 if scale_max <= 1.0 else 100.0  # 0..1 pilot vs 0..100 revised
 
     hits = {"act": [0, 0], "miss": [0, 0], "close": [0, 0]}  # qtype -> [n_correct, n_total]
     for key, val in probe.items():
@@ -116,7 +125,7 @@ def questionnaire_metrics(block_rows: pd.DataFrame) -> dict[str, float]:
         gauge = f"{'scales' if gtype == 'scale' else 'lights'}-{num}"
         truth = _probe_truth(qtype, blk, gauge)
         hits[qtype][1] += 1
-        hits[qtype][0] += int(_rec_is_yes(val, scale_max) == truth)
+        hits[qtype][0] += int(_rec_is_yes(val) == truth)
 
     def _acc(pair: list[int]) -> float:
         return pair[0] / pair[1] if pair[1] else float("nan")

@@ -64,7 +64,9 @@ MISSED_GAUGE_BY_BLOCK: dict[str, str] = {
     for b, gs in GAUGE_BY_BLOCK.items()
 }
 # Which active gauge each probe question targets, by role. Mirrors
-# ``_regenerate.PROBE_TARGETS``; used by the simulator to emit matching slider ids.
+# ``_regenerate.PROBE_TARGETS`` (the scenario generator that emits the probe
+# slider ids); kept here so the analysis can score each item without reading the
+# scenario files.
 PROBE_TARGETS: dict[str, list[tuple[str, str]]] = {
     "A": [("act", "handled"), ("miss", "missed"), ("close", "missed")],
     "B": [("act", "missed"),  ("miss", "handled"), ("close", "handled")],

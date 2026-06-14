@@ -5,5 +5,4 @@ __pycache__/
 .pytest_cache/
 outputs/*.csv
 outputs/*.png
-simulated/*.csv
 !outputs/.gitkeep

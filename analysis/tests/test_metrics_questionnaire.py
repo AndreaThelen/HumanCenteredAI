@@ -67,19 +67,6 @@ def test_mental_model_truth_by_role():
     assert math.isclose(m["mm_explicability"], 1.0 / 3.0)
 
 
-def test_mental_model_pilot_0_1_scale():
-    # Block B: handled = Status light 1, missed = Warning light 2. Recognition-free
-    # subset on the early 0..1 pilot scale (threshold at the 0.5 midpoint).
-    m = questionnaire_metrics(_q([
-        ("MM_B_miss_light2", 1.0),   # Yes (correct: Warning light 2 is missed)
-        ("MM_B_close_light1", 1.0),  # Yes (correct: close calls on Status light 1)
-    ]))
-    assert math.isnan(m["mm_act_accuracy"])           # no act item present
-    assert math.isclose(m["mm_miss_accuracy"], 1.0)
-    assert math.isclose(m["mm_close_accuracy"], 1.0)
-    assert math.isclose(m["mm_explicability"], 1.0)
-
-
 def test_empty_is_safe():
     m = questionnaire_metrics(pd.DataFrame([], columns=COLS))
     assert math.isnan(m["subj_transparency"])

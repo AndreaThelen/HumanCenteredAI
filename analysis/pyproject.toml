@@ -1,7 +1,7 @@
 [project]
 name = "matb-analysis"
 version = "0.1.0"
-description = "OpenMATB resman & communications performance analysis (F1/F2/F3, H4)"
+description = "OpenMATB explanation-form study analysis (F1/F2/F3): transparency, mental model, miss detection, non-aided performance (H1-H4)"
 requires-python = ">=3.12"
 dependencies = [
     "pandas>=2.2",
