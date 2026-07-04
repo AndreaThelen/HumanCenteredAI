@@ -1,0 +1,1 @@
+The Video shows two exemplary automation aid info panel for each block. The first of an successful handling on an event. The second of a miss of the automation aid. The block order in this example is F3, F2, F1.
