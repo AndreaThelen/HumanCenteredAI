@@ -1,0 +1,13 @@
+scenario,age,gender,gaming_experience,gaming_label,gender_label
+1,26,m,2,some,male
+2,41,f,3,none,female
+3,38,m,2,some,male
+4,51,f,1,a lot,female
+5,18,f,3,none,female
+6,19,f,2,some,female
+7,35,f,1,a lot,female
+8,39,m,3,none,male
+9,32,f,3,none,female
+10,40,m,2,some,male
+16,23,m,1,a lot,male
+17,43,m,2,some,male
